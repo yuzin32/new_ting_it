@@ -1,0 +1,776 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background-color: #f4f7fb;
+  color: #334155;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+:root {
+  --primary-color: #2f6feb;
+  --primary-light: #eaf1fe;
+  --primary-border: #bcd4fb;
+  --text-main: #1c2430;
+  --text-sub: #5b6472;
+  --text-muted: #8a92a0;
+  --border-color: #e6e8ec;
+  --bg-card: #ffffff;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+header {
+  background: #ffffff;
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.header-inner {
+  max-width: 1240px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  padding: 14px 24px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 800;
+  font-size: 19px;
+  white-space: nowrap;
+}
+
+.logo .heart {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: linear-gradient(135deg, #4f8cf7, #2f6feb);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 15px;
+}
+
+nav {
+  display: flex;
+  gap: 30px;
+  flex: 1;
+}
+
+nav a {
+  font-size: 15px;
+  color: var(--text-sub);
+  font-weight: 500;
+  padding: 6px 2px;
+  position: relative;
+}
+
+nav a.active {
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -17px;
+  height: 2px;
+  background: var(--primary-color);
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f6f7f9;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 8px 16px;
+  width: 220px;
+  color: var(--text-muted);
+  font-size: 13px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f7f9;
+  font-size: 15px;
+  color: var(--text-sub);
+  flex-shrink: 0;
+}
+
+.icon-btn.user {
+  background: var(--primary-color);
+  color: #ffffff;
+}
+
+.main-container {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 32px 24px 64px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.page-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-title i {
+  color: var(--primary-color);
+}
+
+.page-description {
+  font-size: 13px;
+  color: var(--text-sub);
+  margin-top: 4px;
+}
+
+.header-tip {
+  background-color: var(--primary-light);
+  border: 1px solid var(--primary-border);
+  padding: 10px 18px;
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 500;
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* 카드 배경을 흰색으로 지정 */
+.card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+.card-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-top: 2px;
+  margin-bottom: 20px;
+}
+
+.body-interactive-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 420px;
+  position: relative;
+}
+
+.body-buttons-col {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  z-index: 2;
+}
+
+.organ-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  border: 1px solid #f1f5f9;
+  background-color: #ffffff;
+  cursor: pointer;
+  font-size: 11px;
+  color: var(--text-sub);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+  transition: all 0.2s ease;
+}
+
+.organ-btn i {
+  font-size: 22px;
+  margin-bottom: 6px;
+  color: #f87171;
+}
+
+.organ-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* 선택된 organ-btn 스타일 */
+.organ-btn.active {
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.body-graphic {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.body-graphic img {
+  height: 380px;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.85;
+}
+
+.body-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.organ-banner {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  background-color: #f8fafc;
+  padding: 16px;
+  border-radius: 14px;
+  border: 1px solid #f1f5f9;
+  margin-bottom: 20px;
+}
+
+.organ-badge-icon {
+  width: 48px;
+  height: 48px;
+  background-color: #fee2e2;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ef4444;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.organ-badge-text {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.organ-name {
+  font-size: 18px;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.organ-desc {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-top: 2px;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sub-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.total-count {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.disease-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.pill-btn {
+  padding: 12px 8px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  color: var(--text-sub);
+  transition: all 0.2s;
+}
+
+.pill-btn i {
+  font-size: 18px;
+  color: var(--text-muted);
+}
+
+.pill-btn.active {
+  border: 2px solid var(--primary-color);
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  font-weight: 700;
+}
+
+.pill-btn.active i {
+  color: var(--primary-color);
+}
+
+.disease-box {
+  background-color: #fafafa;
+  border-radius: 14px;
+  padding: 18px;
+  border: 1px solid #f1f5f9;
+}
+
+.disease-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 14px;
+}
+
+.disease-name {
+  font-size: 16px;
+  color: var(--text-main);
+  font-weight: 700;
+}
+
+.disease-name .en-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-sub);
+}
+
+.disease-short {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-top: 2px;
+}
+
+.disease-icon-lg {
+  font-size: 28px;
+  color: #f59e0b;
+}
+
+.info-block {
+  margin-bottom: 16px;
+}
+
+.info-block h5 {
+  font-size: 13px;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.info-block p {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.inline-bullet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  list-style: none;
+}
+
+.inline-bullet-list li {
+  font-size: 12px;
+  color: var(--text-sub);
+}
+
+.inline-bullet-list li::before {
+  content: "• ";
+  color: var(--text-muted);
+}
+
+.care-cards {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.care-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px 6px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-main);
+  border: 1px solid #f1f5f9;
+}
+
+.care-card i {
+  font-size: 18px;
+  color: var(--primary-color);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.action-btn-group {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.btn {
+  padding: 12px;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-outline {
+  flex: 1;
+  background: #ffffff;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.btn-primary {
+  flex: 1.4;
+  background: var(--primary-color);
+  border: none;
+  color: #ffffff;
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+/* ==========================================
+   6. 하단 부위별 요약 Slider
+========================================== */
+.overview-card {
+  margin-bottom: 24px;
+}
+
+/* 슬라이더 전체 감싸는 포지션 컨테이너 */
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+/* 스크롤 영역 감싸기 */
+.summary-slider-wrapper {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 10px 4px;
+  /* 스크롤바 숨기기 (Chrome, Safari, Opera) */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.summary-slider-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* 카드들을 가로 배치하는 트랙 */
+.organ-summary-track {
+  display: flex;
+  gap: 16px;
+}
+
+/* 슬라이드 아이템 개별 넓이 고정 */
+.summary-item {
+  flex: 0 0 calc(100% / 5 - 13px);
+  /* 기본 화면에서 5개씩 표출 */
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 16px 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.summary-item.active {
+  border: 2px solid var(--primary-color);
+  background-color: #fafcff;
+  box-shadow: 0 4px 10px rgba(47, 111, 235, 0.12);
+}
+
+.summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.summary-head i {
+  color: #ef4444;
+  font-size: 14px;
+}
+
+.summary-head h4 {
+  font-size: 14px;
+  color: var(--text-main);
+}
+
+.summary-item ul {
+  list-style: none;
+  text-align: left;
+  padding-left: 8px;
+}
+
+.summary-item li {
+  font-size: 12px;
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+
+.summary-item li::before {
+  content: "• ";
+  color: var(--text-muted);
+}
+
+/* 좌/우 이동 화살표 버튼 */
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border-color);
+  background: #ffffff;
+  color: var(--text-main);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.slider-btn:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+  border-color: var(--primary-color);
+}
+
+.prev-btn {
+  left: -14px;
+}
+
+.next-btn {
+  right: -14px;
+}
+
+.bottom-banner {
+  background: linear-gradient(90deg, #e0edd6 0%, #e0f2fe 100%);
+  border-radius: 16px;
+  padding: 24px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.banner-title h3 {
+  font-size: 16px;
+  color: var(--text-main);
+}
+
+.banner-features {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.feature-item i {
+  font-size: 20px;
+  color: var(--primary-color);
+}
+
+.feature-item strong {
+  font-size: 12px;
+  color: var(--text-main);
+  display: block;
+}
+
+.feature-item p {
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+@media (max-width: 1024px) {
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .organ-summary-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  nav {
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    gap: 18px;
+  }
+
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .search-box {
+    flex: 1;
+  }
+
+  .page-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .body-interactive-wrapper {
+    flex-direction: column;
+    min-height: auto;
+    gap: 16px;
+  }
+
+  .body-buttons-col {
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+  }
+
+  .organ-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+  }
+
+  .organ-btn i {
+    font-size: 18px;
+  }
+
+  .body-graphic img {
+    height: 260px;
+  }
+
+  .disease-pills,
+  .care-cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .action-btn-group {
+    flex-direction: column;
+  }
+
+  .organ-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 16px;
+  }
+
+  .organ-summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .banner-features {
+    flex-direction: column;
+    gap: 12px;
+  }
+}

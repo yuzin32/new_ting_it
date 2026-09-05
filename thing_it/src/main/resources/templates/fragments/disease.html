@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>건강한 식탁 - 질병 알아보기</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="disease.css">
+</head>
+
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo"><span class="heart">♥</span>건강한 식탁</div>
+      <nav>
+        <a href="#">홈</a>
+        <a href="disease.html" class="active">질병 알아보기</a>
+        <a href="food.html">식재료 정보</a>
+        <a href="#">마이페이지</a>
+      </nav>
+      <div class="header-right">
+        <div class="search-box">🔍 질병, 부위 검색</div>
+        <div class="icon-btn">🔔</div>
+        <div class="icon-btn user">👤</div>
+      </div>
+    </div>
+  </header>
+
+  <main class="main-container">
+    <section class="page-header">
+      <div class="header-text">
+        <h1 class="page-title"><i class="fa-regular fa-bookmark"></i> 질병 알아보기</h1>
+        <p class="page-description">인체 부위를 선택하면 해당 부위의 질병과 설명을 확인할 수 있습니다.</p>
+      </div>
+      <div class="header-tip">
+        <i class="fa-regular fa-lightbulb"></i>
+        <span>질병에 대한 이해는 건강한 생활습관의 첫걸음입니다.</span>
+      </div>
+    </section>
+
+    <div class="content-grid">
+      <!-- 좌측: 부위 선택 카드 -->
+      <section class="card body-select-card">
+        <div class="card-header">
+          <h2 class="card-title">인체 부위 선택</h2>
+          <p class="card-sub">원하는 부위를 클릭해주세요.</p>
+        </div>
+
+        <div class="body-interactive-wrapper">
+          <div class="body-buttons-col left-col">
+            <button class="organ-btn" data-organ="head"><i class="fa-solid fa-brain"></i><span>머리</span></button>
+            <button class="organ-btn" data-organ="lungs"><i class="fa-solid fa-lungs"></i><span>폐</span></button>
+            <button class="organ-btn active" data-organ="liver"><i
+                class="fa-solid fa-disease"></i><span>간</span></button>
+            <button class="organ-btn" data-organ="kidney"><i class="fa-solid fa-kidneys"></i><span>신장</span></button>
+            <button class="organ-btn" data-organ="joint"><i class="fa-solid fa-bone"></i><span>뼈/관절</span></button>
+          </div>
+
+          <div class="body-graphic">
+            <img src="https://cdn-icons-png.flaticon.com/512/423/423786.png" alt="인체 구조도">
+          </div>
+
+          <div class="body-buttons-col right-col">
+            <button class="organ-btn" data-organ="heart"><i class="fa-solid fa-heart"></i><span>심장</span></button>
+            <button class="organ-btn" data-organ="stomach"><i class="fa-solid fa-stomach"></i><span>위</span></button>
+            <button class="organ-btn" data-organ="intestine"><i class="fa-solid fa-disease"></i><span>장</span></button>
+            <button class="organ-btn" data-organ="women"><i
+                class="fa-solid fa-person-dress"></i><span>여성질환</span></button>
+          </div>
+        </div>
+        <p class="body-hint"><i class="fa-solid fa-circle-info"></i> 부위를 클릭하면 관련 질병 목록이 표시됩니다.</p>
+      </section>
+
+      <!-- 우측: 선택한 부위 및 질병 상세 카드 -->
+      <section class="card disease-detail-card">
+        <div class="organ-banner">
+          <div class="organ-badge-icon" id="organ-icon"><i class="fa-solid fa-disease"></i></div>
+          <div class="organ-info">
+            <span class="organ-badge-text">선택한 부위</span>
+            <h3 class="organ-name" id="organ-name">간</h3>
+            <p class="organ-desc" id="organ-desc">간은 우리 몸에서 해독, 영양소 대사, 담즙 생성 등 다양한 역할을 수행하는 중요한 장기입니다.</p>
+          </div>
+        </div>
+
+        <div class="section-title-row">
+          <h4 class="sub-title">주요 질병</h4>
+          <span class="total-count" id="total-count">총 4개</span>
+        </div>
+
+        <!-- 동적으로 업데이트되는 주요 질병 탭 버튼 -->
+        <div class="disease-pills" id="disease-pills">
+          <!-- JS에서 동적 생성 -->
+        </div>
+
+        <!-- 동적으로 업데이트되는 선택 질병 세부 정보 -->
+        <div class="disease-box" id="disease-box">
+          <!-- JS에서 동적 생성 -->
+        </div>
+
+        <div class="action-btn-group">
+          <button class="btn btn-outline"><i class="fa-solid fa-utensils"></i> 관련 식재료 보기</button>
+          <button class="btn btn-primary">지병 맞춤 추천에 추가 +</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 하단: 부위별 주요 질병 요약 (슬라이더 적용) -->
+    <section class="card overview-card">
+      <div class="card-header">
+        <h2 class="card-title">부위별 주요 질병 한눈에 보기</h2>
+        <p class="card-sub">원하는 부위를 선택하면 해당 상세 정보로 이동합니다.</p>
+      </div>
+
+      <div class="slider-container">
+        <!-- 왼쪽 이동 버튼 -->
+        <button class="slider-btn prev-btn" id="prevBtn" aria-label="이전"><i
+            class="fa-solid fa-chevron-left"></i></button>
+
+        <!-- 카드 트랙 래퍼 -->
+        <div class="summary-slider-wrapper" id="summaryWrapper">
+          <div class="organ-summary-track" id="summaryTrack">
+            <div class="summary-item" data-organ="head">
+              <div class="summary-head"><i class="fa-solid fa-brain"></i>
+                <h4>머리</h4>
+              </div>
+              <ul>
+                <li>뇌졸중</li>
+                <li>치매</li>
+                <li>두통</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="lungs">
+              <div class="summary-head"><i class="fa-solid fa-lungs"></i>
+                <h4>폐</h4>
+              </div>
+              <ul>
+                <li>폐렴</li>
+                <li>천식</li>
+                <li>COPD</li>
+              </ul>
+            </div>
+            <div class="summary-item active" data-organ="liver">
+              <div class="summary-head"><i class="fa-solid fa-disease"></i>
+                <h4>간</h4>
+              </div>
+              <ul>
+                <li>지방간</li>
+                <li>간염</li>
+                <li>간경변</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="kidney">
+              <div class="summary-head"><i class="fa-solid fa-kidneys"></i>
+                <h4>신장</h4>
+              </div>
+              <ul>
+                <li>만성 신장 질환</li>
+                <li>신우신염</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="joint">
+              <div class="summary-head"><i class="fa-solid fa-bone"></i>
+                <h4>뼈/관절</h4>
+              </div>
+              <ul>
+                <li>퇴행성 관절염</li>
+                <li>골다공증</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="heart">
+              <div class="summary-head"><i class="fa-solid fa-heart"></i>
+                <h4>심장</h4>
+              </div>
+              <ul>
+                <li>고혈압</li>
+                <li>심근경색</li>
+                <li>부정맥</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="stomach">
+              <div class="summary-head"><i class="fa-solid fa-stomach"></i>
+                <h4>위</h4>
+              </div>
+              <ul>
+                <li>위염</li>
+                <li>위궤양</li>
+                <li>위암</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="intestine">
+              <div class="summary-head"><i class="fa-solid fa-disease"></i>
+                <h4>장</h4>
+              </div>
+              <ul>
+                <li>과민성장증후군</li>
+                <li>대장염</li>
+              </ul>
+            </div>
+            <div class="summary-item" data-organ="women">
+              <div class="summary-head"><i class="fa-solid fa-person-dress"></i>
+                <h4>여성질환</h4>
+              </div>
+              <ul>
+                <li>다낭성난소증후군</li>
+                <li>자궁근종</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- 오른쪽 이동 버튼 -->
+        <button class="slider-btn next-btn" id="nextBtn" aria-label="다음"><i
+            class="fa-solid fa-chevron-right"></i></button>
+      </div>
+    </section>
+
+    <section class="bottom-banner">
+      <div class="banner-title">
+        <h3>질병을 정확히 알고 관리하면 더 건강한 삶을 만들 수 있습니다.</h3>
+      </div>
+      <div class="banner-features">
+        <div class="feature-item">
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <div>
+            <strong>조기 발견이 중요해요</strong>
+            <p>정기 검진으로 건강 상태를 확인하세요.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-seedling"></i>
+          <div>
+            <strong>식습관이 기본이에요</strong>
+            <p>균형 잡힌 식사가 질병 예방의 핵심입니다.</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-person-running"></i>
+          <div>
+            <strong>꾸준한 관리가 답이에요</strong>
+            <p>운동과 생활습관 개선으로 건강을 지키세요.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- 자바스크립트 연결 -->
+  <script src="disease.js"></script>
+</body>
+
+</html>
