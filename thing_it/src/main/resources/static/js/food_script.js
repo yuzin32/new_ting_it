@@ -1,25 +1,29 @@
-const items = document.querySelectorAll('.disease-item');
-items.forEach(item => {
-    item.addEventListener('click', function () {
+function check_disease(event) {
+    const checkbox = event.target;
+    if (!checkbox.classList.contains('disease-checkbox')) return;
+    //클릭한체크박스 체크
+    const item = checkbox.closest('.disease-item');
+    item.classList.toggle('selected', checkbox.checked);
 
-        // 카드 안의 체크박스
-        const checkbox = this.querySelector('input[type="checkbox"]');
-
-        // 체크 상태 변경
-        checkbox.checked = !checkbox.checked;
-
-        // 카드 디자인 변경
-        this.classList.toggle('selected', checkbox.checked);
-        
-        //체크된값들 
-        var selectedDiseases = []; 
-        $('#diseaseGrid .disease-checkbox:checked').each(function() { 
-          selectedDiseases.push($(this).val()); }); 
-          document.getElementById('selectedText').textContent = selectedDiseases;
-
+    //클릭한 체크박스
+    const selectedDiseases = [];
+    document.querySelectorAll('.disease-checkbox:checked').forEach(function (checkedBox) {
+        const diseaseName = checkedBox
+            .closest('.disease-item')
+            .querySelector('span')
+            .textContent
+            .trim();
+        selectedDiseases.push(diseaseName);
     });
+    document.getElementById('selectedText').textContent =
+        selectedDiseases.length > 0
+            ? selectedDiseases.join(', ')
+            : '선택된 지병이 없습니다';
+    console.log(selectedDiseases_id);
+}
+///////////////////////////////////////////
 
-});
+/////////////////////////////////////
 const tabs = document.querySelectorAll('.tab');
 const contents = document.querySelectorAll('.tab-content');
 

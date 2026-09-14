@@ -1,5 +1,5 @@
-package com.example.thing_it;
-
+package com.example.thing_it.controller;
+import jakarta.persistence.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;

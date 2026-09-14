@@ -1,0 +1,214 @@
+<th:block th:replace="~{fragments/head :: headContent}"></th:block>
+<link rel="stylesheet" href="/css/food_style.css">
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main class="main-container">
+    <section class="page-header">
+        <div class="header-text">
+            <h1 class="page-title"><i class="fa-regular fa-bookmark"></i> 지병 맞춤 식재료 추천 🌿</h1>
+            <p class="page-description">지병끼리의 연관성을 찾은 후 고객에게 맞는 음식재료를 추천해드립니다.</p>
+        </div>
+    </section>
+
+    <section class="card">
+        <div class="card-header">
+            <h2 class="card-title">고객의 지병을 선택해주세요</h2>
+            <p class="card-sub">(복수 선택 가능)</p>
+        </div>
+        <!-- 질병 -->
+        <div class="disease-grid" id="diseaseGrid" onchange="check_disease(event);">
+            <label class="disease-item" th:each="disease : ${diseases}" th:attr="data-key=${disease.id}" >
+                <input type="checkbox" name="diseases[]" th:value="${disease.id}" class="disease-checkbox" >
+                <div class="ico" th:classappend="'ico-'+${disease.category}"></div>
+                <span th:text="${disease.name}"></span>
+            </label>
+        </div>
+        <div class="info-box small">
+            <span class="info-icon">i</span>
+            <span class="info-box-line">선택한 지병: <b id="selectedText">선택된 지병이 없습니다</b></span>
+        </div>
+        <button class="btn btn-primary" id="analyzeBtn" onclick="btn_analyze()">분석하기 →</button>
+    </section>
+
+
+  <div class="content-grid">
+    <section class="card">
+        <div class="card-header">
+            <h2 class="card-title">선택한 지병 간 연관성 분석</h2>
+            <p class="card-sub">선택한 지병들의 연관성과 공통으로 권장되는 식재료를 확인해보세요.</p>
+        </div>
+      <div class="venn">
+        <div class="venn-circle left">
+          <h3>당뇨에 좋은 식재료</h3>
+          <ul><li>현미</li><li>귀리</li><li>아몬드</li><li>블루베리</li><li>차전자피</li></ul>
+        </div>
+        <div class="venn-circle right">
+          <h3>지방간에 좋은 식재료</h3>
+          <ul><li>아보카도</li><li>올리브유</li><li>토마토</li><li>강황</li><li>녹차</li></ul>
+        </div>
+        <div class="venn-center">
+          <h3>공통 추천 식재료</h3>
+          <ul><li>브로콜리</li><li>시금치</li><li>두부</li><li>연어</li></ul>
+        </div>
+      </div>
+      <div class="venn-legend">
+        <span><i style="background:#7ea9ec"></i>당뇨에 좋은 식재료</span>
+        <span><i style="background:#7dcb9c"></i>지방간에 좋은 식재료</span>
+        <span><i style="background:#eeb444"></i>공통 추천 식재료</span>
+      </div>
+    </section>
+
+    <section class="info-card">
+        <div class="card-header">
+            <h2 class="card-title">🔗지병 연관성 정보</h2>
+        </div>
+      <div class="link-row">
+        <div class="pill blue">당뇨</div>
+        <div class="link-arrow">높은 연관성<div class="line"></div></div>
+        <div class="pill green">지방간</div>
+      </div>
+      <p>당뇨는 지방간의 주요 위험요인 중 하나이며, 혈당 관리가 지방간 개선에 도움을 줄 수 있습니다.</p>
+      <div class="point-box">
+        <h5>공통 관리 포인트</h5>
+        <ul>
+          <li>혈당 조절</li>
+          <li>체중 관리</li>
+          <li>건강한 식습관</li>
+          <li>규칙적인 운동</li>
+          <li>금주 및 절주</li>
+        </ul>
+      </div>
+    </section>
+  </div>
+
+  <section class="card">
+    <div class="rec-head">
+        <div class="card-header">
+            <h2 class="card-title">고객 맞춤 식재료 추천</h2>
+            <p class="card-sub">선택한 지병을 모두 고려하여 추천하는 식재료입니다.</p>
+        </div>
+    </div>
+    <div class="tabs">
+    <div class="tab active" data-target="commonFood">공통 추천 (4)</div>
+    <div class="tab" data-target="diabetesFood">당뇨 맞춤 (5)</div>
+    <div class="tab" data-target="liverFood">지방간 맞춤 (5)</div>
+</div>
+
+<div class="food-scroll">
+
+    <!-- 공통 추천 -->
+    <div class="food-grid tab-content active" id="commonFood">
+
+        <div class="food-card">
+            <div class="food-img broccoli">
+                🥦
+                <span class="badge common">공통 추천</span>
+                <span class="heart-fav">♡</span>
+            </div>
+
+            <div class="food-body">
+                <h4>브로콜리</h4>
+                <div class="effect">
+                    <b>효과</b>혈당 조절, 간 기능 개선
+                </div>
+                <p class="food-desc">
+                    식이섬유와 항산화 성분이 풍부하여 혈당 조절과 간 건강에 도움을 줍니다.
+                </p>
+                <div class="nutri-label">주요 영양성분</div>
+                <div class="nutri-val">식이섬유, 비타민C, 설포라판</div>
+            </div>
+        </div>
+        <!-- 나머지 공통 추천 식재료 -->
+    </div>
+    <!-- 당뇨 맞춤 -->
+    <div class="food-grid tab-content" id="diabetesFood">
+
+        <div class="food-card">
+            <div class="food-img broccoli">
+                🥦
+                <span class="badge">당뇨 맞춤</span>
+                <span class="heart-fav">♡</span>
+            </div>
+
+            <div class="food-body">
+                <h4>브로콜리</h4>
+                <div class="effect">
+                    <b>효과</b>혈당 조절
+                </div>
+                <p class="food-desc">
+                    식이섬유가 풍부하여 혈당 관리에 도움을 줄 수 있습니다.
+                </p>
+                <div class="nutri-label">주요 영양성분</div>
+                <div class="nutri-val">식이섬유, 비타민C</div>
+            </div>
+        </div>
+
+        <!-- 당뇨 맞춤 식재료들 -->
+
+    </div>
+
+
+    <!-- 지방간 맞춤 -->
+    <div class="food-grid tab-content" id="liverFood">
+
+        <div class="food-card">
+            <div class="food-img salmon">
+                🐟
+                <span class="badge">지방간 맞춤</span>
+                <span class="heart-fav">♡</span>
+            </div>
+
+            <div class="food-body">
+                <h4>연어</h4>
+                <div class="effect">
+                    <b>효과</b>간 건강 관리
+                </div>
+                <p class="food-desc">
+                    오메가3 지방산을 함유한 식재료입니다.
+                </p>
+                <div class="nutri-label">주요 영양성분</div>
+                <div class="nutri-val">오메가3, 비타민D, 단백질</div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+  </section>
+    <section class="bottom-banner">
+        <div class="banner-title">
+            <h3>질병을 정확히 알고 관리하면 더 건강한 삶을 만들 수 있습니다.</h3>
+        </div>
+        <!-- JS에서 동적 렌더링 -->
+        <div class="banner-features" id="banner-features">
+            <div class="feature-item">
+                <div>
+                    <div class="tip-ico">🍳</div>
+                    <strong>조리법</strong>
+                    <p>기름에 튀기기보다는 찌거나 굽는 조리법을 추천합니다.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="tip-ico">📅</div>
+                <div>
+                    <strong>섭취 빈도</strong>
+                    <p>꾸준히 주 3~5회 이상 섭취하는 것이 좋습니다.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <div class="tip-ico">💧</div>
+                <div>
+                    <strong>함께하면 좋은 습관</strong>
+                    <p>충분한 수분 섭취와 규칙적인 운동을 병행하면 더욱 효과적입니다.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <p class="disclaimer"></p>
+</main>
+
+<script src="/js/food_script.js"></script>
+</body>
+</html>

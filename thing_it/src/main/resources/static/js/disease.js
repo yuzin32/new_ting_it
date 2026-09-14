@@ -1,35 +1,66 @@
-let currentOrganKey = "liver";
-let currentDiseaseIndex = 0;
+// =============================================================
+//  전역 상태 변수 관리
+// =============================================================
+let currentOrganKey = null;            // 현재 선택된 부위
+let currentDiseaseIndex = 0;           // 선택된 질병 인덱스
+let currentLoadedDiseases = [];        // API로 로드된 질병 목록
+const selectedDiseases = new Set();    // 사용자가 추가한 지병 목록 (중복 방지)
 
+// =============================================================
+//  DOM 요소 획득
+// =============================================================
 const organBtns = document.querySelectorAll('.organ-btn');
-const summaryItems = document.querySelectorAll('.summary-item');
 const organNameEl = document.getElementById('organ-name');
 const organDescEl = document.getElementById('organ-desc');
 const organIconEl = document.getElementById('organ-icon');
 const totalCountEl = document.getElementById('total-count');
 const diseasePillsEl = document.getElementById('disease-pills');
 const diseaseBoxEl = document.getElementById('disease-box');
+const summaryTrackEl = document.getElementById('summaryTrack');
+const bannerFeaturesEl = document.getElementById('banner-features');
 
-// DB 테이블 th_disease의 category 컬럼값과 정확히 매핑
+const initialPlaceholder = document.getElementById('initial-placeholder');
+const diseaseDetailContainer = document.getElementById('disease-detail-container');
+
+const addDiseaseBtn = document.getElementById('add-disease-btn');
+const selectedChipsWrapper = document.getElementById('selected-chips-wrapper');
+const goFoodBtn = document.getElementById('go-food-btn');
+
+// =============================================================
+//  부위별 기본 메타데이터
+// =============================================================
 const organMeta = {
-    liver: { name: "간", icon: "fa-solid fa-disease", desc: "간은 우리 몸에서 해독, 영양소 대사, 담즙 생성 등 다양한 역할을 수행하는 중요한 장기입니다.", dbCategory: "간질환" },
-    head: { name: "머리", icon: "fa-solid fa-brain", desc: "머리와 뇌는 인체의 중추신경계를 담당하여 인지, 기억, 감각, 운동 조절을 총괄합니다.", dbCategory: "뇌·신경질환" },
-    lungs: { name: "폐", icon: "fa-solid fa-lungs", desc: "폐는 호흡을 통해 산소를 받아들이고 이산화탄소를 배출하는 가스 교환 기관입니다.", dbCategory: "호흡기질환" },
-    heart: { name: "심장", icon: "fa-solid fa-heart", desc: "심장은 혈액 순환을 주도하여 온몸으로 산소와 영양소를 공급하는 펌프 역할을 합니다.", dbCategory: "심장질환" },
-    stomach: { name: "위", icon: "fa-solid fa-stomach", desc: "위는 섭취한 음식물을 연동 운동과 위산 분비를 통해 소화시키는 주된 기관입니다.", dbCategory: "위장질환" },
-    kidney: { name: "신장", icon: "fa-solid fa-kidneys", desc: "신장은 혈액 속 노폐물을 걸러내어 소변으로 배출하고 수분과 염분 균형을 조절합니다.", dbCategory: "신장질환" },
-    joint: { name: "뼈/관절", icon: "fa-solid fa-bone", desc: "신체의 골격을 형성하고 신체를 지지하며 관절을 통해 원활한 운동을 돕습니다.", dbCategory: "관절·뼈질환" },
-    intestine: { name: "장", icon: "fa-solid fa-disease", desc: "소장과 대장으로 구성되어 영양분 흡수와 수분 재흡수, 배설물 형성을 담당합니다.", dbCategory: "장질환" },
-    women: { name: "여성질환", icon: "fa-solid fa-person-dress", desc: "여성 생식기계 및 호르몬 불균형과 관련된 다양한 건강 질환을 의미합니다.", dbCategory: "여성질환" }
+    head: { name: "머리", icon: "fa-solid fa-brain", desc: "머리와 뇌는 인체의 중추신경계를 담당하여 인지, 기억, 감각, 운동 조절을 총괄합니다.", dbCategory: "머리" },
+    lungs: { name: "폐", icon: "fa-solid fa-lungs", desc: "폐는 호흡을 통해 산소를 받아들이고 이산화탄소를 배출하는 가스 교환 기관입니다.", dbCategory: "폐" },
+    liver: { name: "간", icon: "fa-solid fa-disease", desc: "간은 우리 몸에서 해독, 영양소 대사, 담즙 생성 등 다양한 역할을 수행하는 중요한 장기입니다.", dbCategory: "간" },
+    kidney: { name: "신장", icon: "fa-solid fa-notes-medical", desc: "신장은 혈액 속 노폐물을 걸러내어 소변으로 배출하고 수분과 염분 균형을 조절합니다.", dbCategory: "신장" },
+    joint: { name: "뼈/관절", icon: "fa-solid fa-bone", desc: "신체의 골격을 형성하고 신체를 지지하며 관절을 통해 원활한 운동을 돕습니다.", dbCategory: "뼈/관절" },
+    heart: { name: "심장", icon: "fa-solid fa-heart", desc: "심장은 혈액 순환을 주도하여 온몸으로 산소와 영양소를 공급하는 펌프 역할을 합니다.", dbCategory: "심장" },
+    stomach: { name: "위", icon: "fa-solid fa-apple-whole", desc: "위는 섭취한 음식물을 연동 운동과 위산 분비를 통해 소화시키는 주된 기관입니다.", dbCategory: "위" },
+    intestine: { name: "장", icon: "fa-solid fa-disease", desc: "소장과 대장으로 구성되어 영양분 흡수와 수분 재흡수, 배설물 형성을 담당합니다.", dbCategory: "장" },
+    women: { name: "여성질환", icon: "fa-solid fa-person-dress", desc: "여성 생식기계 및 호르몬 불균형과 관련된 다양한 건강 질환을 의미합니다.", dbCategory: "여성질환" },
+    muscle: { name: "근육", icon: "fa-solid fa-child", desc: "수축과 이완을 통해 신체 움직임을 만들고 자세 유지와 장기 보호를 담당합니다.", dbCategory: "근육" },
+    blood: { name: "피", icon: "fa-solid fa-droplet", desc: "동맥·정맥·모세혈관으로 구성되어 산소와 영양분을 전신에 공급하고 노폐물을 회수합니다.", dbCategory: "피" }
 };
 
+// =============================================================
+//  초기화 실행
+// =============================================================
 document.addEventListener('DOMContentLoaded', () => {
-    renderOrganDetail(currentOrganKey);
+    if (initialPlaceholder) initialPlaceholder.style.display = 'flex';
+    if (diseaseDetailContainer) diseaseDetailContainer.style.display = 'none';
+
+    initAllSummaryCards();
     initEventListeners();
     initSlider();
+    renderSelectedChips();
 });
 
+// =============================================================
+//  이벤트 리스너 등록
+// =============================================================
 function initEventListeners() {
+    // 1. 인체 부위 버튼 클릭
     organBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const organKey = btn.getAttribute('data-organ');
@@ -42,26 +73,48 @@ function initEventListeners() {
         });
     });
 
-    summaryItems.forEach(item => {
-        item.addEventListener('click', () => {
-            const organKey = item.getAttribute('data-organ');
-            if (organKey) {
-                currentOrganKey = organKey;
-                currentDiseaseIndex = 0;
-                updateActiveStates(organKey);
-                renderOrganDetail(organKey);
-                document.querySelector('.content-grid')?.scrollIntoView({ behavior: 'smooth' });
+    // 2. [지병 추가하기] 버튼 클릭
+    if (addDiseaseBtn) {
+        addDiseaseBtn.addEventListener('click', () => {
+            if (currentLoadedDiseases.length > 0 && currentLoadedDiseases[currentDiseaseIndex]) {
+                const diseaseObj = currentLoadedDiseases[currentDiseaseIndex];
+                const diseaseName = typeof diseaseObj === 'object' ? diseaseObj.name : diseaseObj;
+
+                if (diseaseName) {
+                    addDiseaseChip(diseaseName);
+                }
+            } else {
+                alert('추가할 질병 정보가 없습니다.');
             }
         });
-    });
+    }
+
+    // 3. [관련 식재료 보기] 버튼 클릭
+    if (goFoodBtn) {
+        goFoodBtn.addEventListener('click', () => {
+            const diseaseList = Array.from(selectedDiseases).join(',');
+            if (diseaseList) {
+                location.href = `/food?diseases=${encodeURIComponent(diseaseList)}`;
+            } else {
+                location.href = '/food';
+            }
+        });
+    }
 }
 
 function updateActiveStates(organKey) {
     organBtns.forEach(btn => btn.classList.toggle('active', btn.getAttribute('data-organ') === organKey));
+    const summaryItems = document.querySelectorAll('.summary-item');
     summaryItems.forEach(item => item.classList.toggle('active', item.getAttribute('data-organ') === organKey));
 }
 
+// =============================================================
+//  질병 데이터 렌더링 (API)
+// =============================================================
 async function renderOrganDetail(organKey) {
+    if (initialPlaceholder) initialPlaceholder.style.display = 'none';
+    if (diseaseDetailContainer) diseaseDetailContainer.style.display = 'block';
+
     const meta = organMeta[organKey] || { name: organKey, icon: "fa-solid fa-notes-medical", desc: "", dbCategory: organKey };
 
     if (organNameEl) organNameEl.textContent = meta.name;
@@ -73,6 +126,8 @@ async function renderOrganDetail(organKey) {
         if (!response.ok) throw new Error('데이터 로드 실패');
 
         const diseases = await response.json();
+        currentLoadedDiseases = diseases;
+
         if (totalCountEl) totalCountEl.textContent = `총 ${diseases.length}개`;
 
         if (diseasePillsEl) {
@@ -80,7 +135,6 @@ async function renderOrganDetail(organKey) {
             diseases.forEach((disease, index) => {
                 const button = document.createElement('button');
                 button.className = `pill-btn ${index === currentDiseaseIndex ? 'active' : ''}`;
-                // [object Object] 방지: disease.name 명시적 읽기
                 const diseaseName = typeof disease === 'object' ? disease.name : disease;
                 button.innerHTML = `<i class="${meta.icon}"></i><span>${diseaseName}</span>`;
 
@@ -99,6 +153,7 @@ async function renderOrganDetail(organKey) {
                 renderDiseaseDetail(diseases[currentDiseaseIndex]);
             } else {
                 diseaseBoxEl.innerHTML = '<p class="no-data">등록된 질병 정보가 없습니다.</p>';
+                if (bannerFeaturesEl) bannerFeaturesEl.innerHTML = '';
             }
         }
     } catch (error) {
@@ -144,13 +199,176 @@ function renderDiseaseDetail(disease) {
       <h5>관리 방법</h5>
       <div class="care-cards">${careHtml.length > 0 ? careHtml : '<p class="no-info">등록된 관리 가이드가 없습니다.</p>'}</div>
     </div>`;
+
+    if (bannerFeaturesEl) {
+        bannerFeaturesEl.innerHTML = `
+        <div class="feature-item">
+          <i class="fa-solid fa-magnifying-glass-chart"></i>
+          <div>
+            <strong>원인 관리</strong>
+            <p>${causes[0] || '정기적인 검진으로 건강을 관리하세요.'}</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-seedling"></i>
+          <div>
+            <strong>추천 식습관</strong>
+            <p>${habits[0] || '균형 잡힌 식사가 예방의 핵심입니다.'}</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <i class="fa-solid fa-person-running"></i>
+          <div>
+            <strong>관리 가이드</strong>
+            <p>${cares[0] || '꾸준한 생활습관 개선이 필요합니다.'}</p>
+          </div>
+        </div>`;
+    }
+}
+
+// =============================================================
+//  질병 칩(Tag) 추가/삭제 및 카운트 업데이트
+// =============================================================
+function addDiseaseChip(diseaseName) {
+    if (selectedDiseases.has(diseaseName)) {
+        alert(`'${diseaseName}'은(는) 이미 추가되어 있습니다.`);
+        return;
+    }
+
+    selectedDiseases.add(diseaseName);
+    renderSelectedChips();
+}
+
+function removeDiseaseChip(diseaseName) {
+    selectedDiseases.delete(diseaseName);
+    renderSelectedChips();
+}
+
+function renderSelectedChips() {
+    // 1. [지병 추가하기] 버튼 옆 "선택된 지병 : N개" 업데이트
+    const countBadge = document.getElementById('selected-count-text');
+    if (countBadge) {
+        countBadge.textContent = `선택된 지병 : ${selectedDiseases.size}개`;
+    }
+
+    if (!selectedChipsWrapper) return;
+
+    // 2. 추가된 지병이 없으면 기본 안내 문구 표시
+    if (selectedDiseases.size === 0) {
+        selectedChipsWrapper.innerHTML = '<span class="empty-msg">추가된 지병이 없습니다.</span>';
+        return;
+    }
+
+    // 3. 버튼 아랫줄(#selected-chips-wrapper)에 칩태그 렌더링
+    selectedChipsWrapper.innerHTML = '';
+    selectedDiseases.forEach(name => {
+        const chip = document.createElement('div');
+        chip.className = 'disease-chip';
+        chip.innerHTML = `
+            <span>${name}</span>
+            <button class="chip-remove-btn" aria-label="${name} 삭제"><i class="fa-solid fa-xmark"></i></button>
+        `;
+
+        chip.querySelector('.chip-remove-btn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeDiseaseChip(name);
+        });
+
+        selectedChipsWrapper.appendChild(chip);
+    });
+}
+
+// =============================================================
+//  하단 슬라이더 로직
+// =============================================================
+async function initAllSummaryCards() {
+    if (!summaryTrackEl) return;
+    summaryTrackEl.innerHTML = '';
+
+    for (const [organKey, meta] of Object.entries(organMeta)) {
+        try {
+            const response = await fetch(`/api/diseases/${encodeURIComponent(meta.dbCategory)}`);
+            const diseases = response.ok ? await response.json() : [];
+
+            const summaryItem = document.createElement('div');
+            summaryItem.className = `summary-item ${organKey === currentOrganKey ? 'active' : ''}`;
+            summaryItem.setAttribute('data-organ', organKey);
+
+            const diseaseListHtml = diseases.length > 0
+                ? diseases.map(d => `<li>${d.name || d}</li>`).join('')
+                : '<li>등록된 질병 없음</li>';
+
+            summaryItem.innerHTML = `
+                <div class="summary-head">
+                    <i class="${meta.icon}"></i>
+                    <h4>${meta.name}</h4>
+                </div>
+                <ul>${diseaseListHtml}</ul>
+            `;
+
+            summaryItem.addEventListener('click', () => {
+                currentOrganKey = organKey;
+                currentDiseaseIndex = 0;
+                updateActiveStates(organKey);
+                renderOrganDetail(organKey);
+                document.querySelector('.content-grid')?.scrollIntoView({ behavior: 'smooth' });
+            });
+
+            summaryTrackEl.appendChild(summaryItem);
+        } catch (error) {
+            console.error(`Summary card fetch error [${organKey}]:`, error);
+        }
+    }
 }
 
 function initSlider() {
-    const summaryWrapper = document.getElementById('summaryWrapper');
+    const slider = document.getElementById('summaryWrapper');
     const prevBtn = document.getElementById('prevBtn');
     const nextBtn = document.getElementById('nextBtn');
-    if (!summaryWrapper || !prevBtn || !nextBtn) return;
-    prevBtn.addEventListener('click', () => summaryWrapper.scrollBy({ left: -200, behavior: 'smooth' }));
-    nextBtn.addEventListener('click', () => summaryWrapper.scrollBy({ left: 200, behavior: 'smooth' }));
+
+    if (!slider) return;
+
+    const scrollAmount = 350;
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            slider.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        });
+    }
+
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener('mousedown', (e) => {
+        isDown = true;
+        slider.style.cursor = 'grabbing';
+        slider.style.scrollBehavior = 'auto';
+        startX = e.pageX - slider.offsetLeft;
+        scrollLeft = slider.scrollLeft;
+    });
+
+    const stopDragging = () => {
+        if (!isDown) return;
+        isDown = false;
+        slider.style.cursor = 'pointer';
+        slider.style.scrollBehavior = 'smooth';
+    };
+
+    slider.addEventListener('mouseleave', stopDragging);
+    slider.addEventListener('mouseup', stopDragging);
+
+    slider.addEventListener('mousemove', (e) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - slider.offsetLeft;
+        const walk = (x - startX) * 1.5;
+        slider.scrollLeft = scrollLeft - walk;
+    });
 }

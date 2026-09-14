@@ -1,0 +1,20 @@
+
+
+<header>
+    <div class="header-inner">
+        <div class="logo">
+            <span class="heart">♥</span>건강한 식탁
+        </div>
+        <nav>
+            <a href="/" th:classappend="${currentPage == 'home'} ? ' active' : ''">홈</a>
+            <a href="/disease" th:classappend="${currentPage == 'disease'} ? ' active' : ''">질병 알아보기</a>
+            <a href="/food" th:classappend="${currentPage == 'food'} ? ' active' : ''">지병 맞춤 식재료 추천</a>
+            <a href="/mypage" th:classappend="${currentPage == 'mypage'} ? ' active' : ''">마이페이지</a>
+        </nav>
+        <div class="header-right">
+            <div class="search-box">🔍 질병, 부위 검색</div>
+            <div class="icon-btn">🔔</div>
+            <div class="icon-btn user">👤</div>
+        </div>
+    </div>
+</header>
