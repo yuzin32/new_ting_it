@@ -38,20 +38,27 @@
             <h2 class="card-title">선택한 지병 간 연관성 분석</h2>
             <p class="card-sub">선택한 지병들의 연관성과 공통으로 권장되는 식재료를 확인해보세요.</p>
         </div>
-      <div class="venn">
-        <div class="venn-circle left">
-          <h3>당뇨에 좋은 식재료</h3>
-          <ul><li>현미</li><li>귀리</li><li>아몬드</li><li>블루베리</li><li>차전자피</li></ul>
+        <div class="venn" id="venn">
+            <div class="venn-circle left">
+                <div class="venn-body">
+                    <h3 id="vennLeftTitle"></h3>
+                    <ul id="vennLeftList"></ul>
+                </div>
+            </div>
+            <div class="venn-circle right">
+                <div class="venn-body">
+                    <h3 id="vennRightTitle"></h3>
+                    <ul id="vennRightList"></ul>
+                </div>
+            </div>
+            <div class="venn-center">
+                <div class="venn-body">
+                    <h3>공통 추천 식재료</h3>
+                    <ul id="vennCenterList"></ul>
+                </div>
+            </div>
         </div>
-        <div class="venn-circle right">
-          <h3>지방간에 좋은 식재료</h3>
-          <ul><li>아보카도</li><li>올리브유</li><li>토마토</li><li>강황</li><li>녹차</li></ul>
-        </div>
-        <div class="venn-center">
-          <h3>공통 추천 식재료</h3>
-          <ul><li>브로콜리</li><li>시금치</li><li>두부</li><li>연어</li></ul>
-        </div>
-      </div>
+        <p id="vennMsg" style="display:none; text-align:center;"></p>
       <div class="venn-legend">
         <span><i style="background:#7ea9ec"></i>당뇨에 좋은 식재료</span>
         <span><i style="background:#7dcb9c"></i>지방간에 좋은 식재료</span>

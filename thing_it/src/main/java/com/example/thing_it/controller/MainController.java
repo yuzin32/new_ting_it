@@ -27,7 +27,6 @@ public class MainController {
         model.addAttribute("currentPage", "food");
         // Thymeleaf에서 사용할 이름으로 전달
         model.addAttribute("diseases", diseases);
-
         // templates/fragments/food.html 반환
         return "/food";
     }
