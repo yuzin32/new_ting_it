@@ -1,0 +1,163 @@
+
+<th:block th:replace="~{fragments/head :: headContent}"></th:block>
+<link rel="stylesheet" href="/css/mypage.css">
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+
+  <!-- 메인 레이아웃 -->
+  <div class="container">
+    <!-- 좌측 사이드바 -->
+    <aside class="sidebar">
+      <ul class="sidebar-menu">
+        <li class="active"><a href="#"><i class="fa-regular fa-user"></i> 마이페이지</a></li>
+        <li><a href="#"><i class="fa-solid fa-id-card"></i> 내 정보</a></li>
+        <li><a href="#"><i class="fa-regular fa-heart"></i> 나의 질병</a></li>
+        <li><a href="#"><i class="fa-solid fa-check-double"></i> 추천 기록</a></li>
+        <li><a href="#"><i class="fa-regular fa-bookmark"></i> 관심 식재료</a></li>
+        <li><a href="#"><i class="fa-regular fa-calendar-check"></i> 식단 기록</a></li>
+        <li><a href="#"><i class="fa-regular fa-file-lines"></i> 건강 리포트</a></li>
+        <li><a href="#"><i class="fa-solid fa-gear"></i> 설정</a></li>
+      </ul>
+      <div class="logout-btn">
+        <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃</a>
+      </div>
+    </aside>
+
+    <!-- 우측 메인 콘텐츠 -->
+    <main class="main-content">
+      <div class="page-title">
+        <h2>마이페이지</h2>
+        <p>회원님의 건강 정보를 한눈에 확인하세요.</p>
+      </div>
+
+      <!-- 프로필 카드 -->
+      <section class="card profile-card">
+        <div class="profile-left">
+          <div class="avatar">
+            <img src="https://via.placeholder.com/80" alt="프로필 이미지">
+          </div>
+          <div class="profile-info">
+            <div class="name-tag">
+              <h3>김지혜 <span>님</span></h3>
+              <span class="badge">일반회원</span>
+            </div>
+            <p class="email">jihye.kim@email.com</p>
+            <p class="join-date">회원가입일 2024.05.20</p>
+          </div>
+        </div>
+        <button class="btn-outline">내 정보 수정</button>
+      </section>
+
+      <!-- 나의 질병 -->
+      <section class="card disease-section">
+        <div class="card-header">
+          <h3>나의 질병</h3>
+          <a href="#" class="more-link">관리하기 &gt;</a>
+        </div>
+        <div class="disease-tags">
+          <div class="disease-tag red">
+            <i class="fa-solid fa-droplet"></i> 당뇨
+          </div>
+          <div class="disease-tag pink">
+            <i class="fa-solid fa-heart"></i> 지방간
+          </div>
+          <div class="disease-tag orange">
+            <i class="fa-solid fa-wave-square"></i> 고혈압
+          </div>
+          <button class="add-tag-btn">+ 추가하기</button>
+        </div>
+      </section>
+
+      <!-- 최근 추천 식재료 -->
+      <section class="card food-section">
+        <div class="card-header">
+          <h3>최근 추천 식재료</h3>
+          <a href="#" class="more-link">전체 보기 &gt;</a>
+        </div>
+        <div class="food-grid">
+          <!-- 카드의 예시 -->
+          <div class="food-card">
+            <div class="food-img-wrapper">
+              <span class="food-badge">공통 추천</span>
+              <button class="heart-btn"><i class="fa-regular fa-heart"></i></button>
+              <img src="https://via.placeholder.com/120?text=Broccoli" alt="브로콜리">
+            </div>
+            <h4>브로콜리</h4>
+            <p>항산화 작용, 혈당 조절에 도움을 줍니다.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-img-wrapper">
+              <span class="food-badge">공통 추천</span>
+              <button class="heart-btn"><i class="fa-regular fa-heart"></i></button>
+              <img src="https://via.placeholder.com/120?text=Spinach" alt="시금치">
+            </div>
+            <h4>시금치</h4>
+            <p>혈액순환 개선, 간 건강에 도움을 줍니다.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-img-wrapper">
+              <span class="food-badge">공통 추천</span>
+              <button class="heart-btn"><i class="fa-regular fa-heart"></i></button>
+              <img src="https://via.placeholder.com/120?text=Tofu" alt="두부">
+            </div>
+            <h4>두부</h4>
+            <p>단백질 공급, 콜레스테롤 개선에 도움을 줍니다.</p>
+          </div>
+
+          <div class="food-card">
+            <div class="food-img-wrapper">
+              <span class="food-badge">공통 추천</span>
+              <button class="heart-btn"><i class="fa-regular fa-heart"></i></button>
+              <img src="https://via.placeholder.com/120?text=Salmon" alt="연어">
+            </div>
+            <h4>연어</h4>
+            <p>오메가3 풍부, 심혈관 건강에 도움을 줍니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 나의 활동 요약 -->
+      <section class="card activity-section">
+        <div class="card-header">
+          <h3>나의 활동 요약</h3>
+        </div>
+        <div class="activity-grid">
+          <div class="activity-item">
+            <div class="activity-icon blue"><i class="fa-regular fa-bookmark"></i></div>
+            <p class="label">추천 기록</p>
+            <p class="value">12<span>회</span></p>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon pink"><i class="fa-regular fa-heart"></i></div>
+            <p class="label">관심 식재료</p>
+            <p class="value">8<span>개</span></p>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon green"><i class="fa-regular fa-pen-to-square"></i></div>
+            <p class="label">식단 기록</p>
+            <p class="value">15<span>일</span></p>
+          </div>
+          <div class="activity-item">
+            <div class="activity-icon purple"><i class="fa-solid fa-chart-line"></i></div>
+            <p class="label">건강 점수</p>
+            <p class="value">82<span>점</span> <span class="sub-status green">좋음</span></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 건강 관리 팁 -->
+      <section class="card tip-section">
+        <div class="tip-content">
+          <span class="tip-icon">🌱</span>
+          <p>꾸준한 식단 관리와 규칙적인 운동으로 건강한 습관을 만들어보세요!</p>
+        </div>
+        <a href="#" class="tip-arrow">&gt;</a>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/mypage.js"></script>
+</body>
+</html>

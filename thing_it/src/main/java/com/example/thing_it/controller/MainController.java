@@ -30,4 +30,12 @@ public class MainController {
         // templates/fragments/food.html 반환
         return "/food";
     }
+    @GetMapping({"/", "/mypage"})
+    public String mypage() {
+        return "/mypage";
+    }
+    @GetMapping({"/", "/login"})
+    public String login() {
+        return "/login";
+    }
 }

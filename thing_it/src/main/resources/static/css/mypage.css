@@ -1,0 +1,427 @@
+
+/* 리셋 및 기본 설정 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+body {
+  background-color: #f7f9fc;
+  color: #333;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* 상단 헤더 */
+.header {
+  height: 60px;
+  background-color: #fff;
+  border-bottom: 1px solid #eef1f6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 40px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #2b70e4;
+}
+
+.nav a {
+  margin-right: 24px;
+  font-size: 14px;
+  color: #555;
+  font-weight: 500;
+}
+
+.nav a:hover {
+  color: #2b70e4;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-btn {
+  background-color: #e8f0fe;
+  color: #2b70e4;
+}
+
+/* 전체 레이아웃 구조 */
+.container {
+  display: flex;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: calc(100vh - 60px);
+}
+
+/* 사이드바 */
+.sidebar {
+  width: 220px;
+  background-color: #fff;
+  border-right: 1px solid #eef1f6;
+  padding: 20px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar-menu {
+  list-style: none;
+}
+
+.sidebar-menu li a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 24px;
+  font-size: 14px;
+  color: #666;
+
+}
+
+.sidebar-menu li.active a {
+  background-color: #eef4ff;
+  color: #2b70e4;
+  font-weight: bold;
+  border-radius: 8px;
+  margin: 0 12px;
+  padding: 12px 12px;
+}
+
+.sidebar-menu li a:hover {
+  color: #2b70e4;
+}
+
+.logout-btn {
+  padding: 12px 24px;
+}
+
+.logout-btn a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #888;
+  font-size: 14px;
+}
+
+/* 메인 콘텐츠 영역 */
+.main-content {
+  flex: 1;
+  padding: 30px 40px;
+}
+
+.page-title h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #111;
+}
+
+.page-title p {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+  margin-bottom: 20px;
+}
+
+/* 공통 카드 스타일 */
+.card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.card-header h3 {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.more-link {
+  font-size: 12px;
+  color: #2b70e4;
+}
+
+/* 프로필 카드 */
+.profile-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatar img {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.name-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.name-tag h3 {
+  font-size: 16px;
+}
+
+.name-tag h3 span {
+  font-weight: normal;
+  font-size: 14px;
+}
+
+.badge {
+  background-color: #e8f0fe;
+  color: #2b70e4;
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+
+.email {
+  font-size: 13px;
+  color: #666;
+  margin-top: 4px;
+}
+
+.join-date {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 2px;
+}
+
+.btn-outline {
+  background: none;
+  border: 1px solid #d0d7de;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+.btn-outline:hover {
+  background-color: #f3f4f6;
+}
+
+/* 질병 태그 */
+.disease-tags {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.disease-tag {
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.disease-tag.red { background-color: #fff0f0; color: #e5484d; }
+.disease-tag.pink { background-color: #fff0f5; color: #e93d82; }
+.disease-tag.orange { background-color: #fff3ec; color: #f76808; }
+
+.add-tag-btn {
+  background-color: #f7f9fc;
+  border: 1px dashed #d0d7de;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #777;
+  cursor: pointer;
+}
+
+/* 식재료 그리드 */
+.food-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.food-card {
+  border: 1px solid #f0f0f0;
+  border-radius: 10px;
+  padding: 12px;
+  position: relative;
+  background-color: #fff;
+}
+
+.food-img-wrapper {
+  position: relative;
+  text-align: center;
+  background-color: #fafafa;
+  border-radius: 8px;
+  padding: 16px 0;
+  margin-bottom: 12px;
+}
+
+.food-img-wrapper img {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+}
+
+.food-badge {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  background-color: #e6f4ea;
+  color: #137333;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.heart-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: none;
+  border: none;
+  color: #ccc;
+  cursor: pointer;
+}
+
+.food-card h4 {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.food-card p {
+  font-size: 11px;
+  color: #888;
+  line-height: 1.4;
+}
+
+/* 활동 요약 그리드 */
+.activity-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.activity-item {
+  background-color: #f9fbfd;
+  border-radius: 10px;
+  padding: 16px;
+  text-align: center;
+}
+
+.activity-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px auto;
+  font-size: 14px;
+}
+
+.activity-icon.blue { background-color: #e8f0fe; color: #2b70e4; }
+.activity-icon.pink { background-color: #fce8e6; color: #d93025; }
+.activity-icon.green { background-color: #e6f4ea; color: #137333; }
+.activity-icon.purple { background-color: #f3e8fd; color: #8ab4f8; }
+
+.activity-item .label {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 6px;
+}
+
+.activity-item .value {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.activity-item .value span {
+  font-size: 12px;
+  font-weight: normal;
+}
+
+.sub-status {
+  font-size: 10px !important;
+  background-color: #e6f4ea;
+  color: #137333;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 4px;
+}
+
+/* 건강 관리 팁 */
+.tip-section {
+  background-color: #f0f9f4;
+  border: 1px solid #e1f3e8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.tip-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tip-content p {
+  font-size: 13px;
+  color: #2e7d32;
+  font-weight: 500;
+}
+
+.tip-arrow {
+  color: #2e7d32;
+  font-weight: bold;
+}

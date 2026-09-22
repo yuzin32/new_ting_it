@@ -1,0 +1,139 @@
+
+<th:block th:replace="~{fragments/head :: headContent}"></th:block>
+<link rel="stylesheet" href="/css/login.css">
+</head>
+<body>
+
+    <div class="container">
+        <!-- 헤더 영역 -->
+        <header class="header">
+            <div class="brand-logo">
+                <i data-lucide="heart" class="heart-icon"></i>
+                <h1 class="brand-title">건강한 식탁</h1>
+            </div>
+            <p class="brand-subtitle">지병에 맞는 식재료로 건강한 삶을</p>
+        </header>
+
+        <!-- 로그인 폼 카드 -->
+        <main class="card">
+            <h2 class="card-title">로그인</h2>
+            <p class="card-welcome">건강한 식탁에 오신 것을 환영합니다!</p>
+
+            <form id="loginForm">
+                <!-- 이메일 입력 -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <i data-lucide="mail" class="input-icon"></i>
+                        <input type="email" class="input-field" placeholder="이메일을 입력해주세요" required>
+                    </div>
+                </div>
+
+                <!-- 비밀번호 입력 -->
+                <div class="form-group">
+                    <div class="input-wrapper">
+                        <i data-lucide="lock" class="input-icon"></i>
+                        <input type="password" id="passwordInput" class="input-field" placeholder="비밀번호를 입력해주세요" required>
+                        <button type="button" class="toggle-password" id="togglePassword">
+                            <i data-lucide="eye" id="eyeIcon" style="width: 18px; height: 18px;"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 로그인 옵션 -->
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox">
+                        <span>로그인 상태 유지</span>
+                    </label>
+                    <a href="#" class="forgot-password">비밀번호 찾기</a>
+                </div>
+
+                <!-- 로그인 버튼 -->
+                <button type="submit" class="btn-primary">로그인</button>
+            </form>
+
+            <!-- 구분선 -->
+            <div class="divider">
+                <span>또는</span>
+            </div>
+
+            <!-- 소셜 로그인 -->
+            <div class="social-login">
+                <button type="button" class="btn-social">
+                    <svg class="social-icon-svg" viewBox="0 0 24 24">
+                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                    </svg>
+                    Google로 로그인
+                </button>
+                <button type="button" class="btn-social">
+                    <svg class="social-icon-svg" viewBox="0 0 24 24">
+                        <path fill="#3C1E1E" d="M12 3C6.48 3 2 6.48 2 10.8c0 2.76 1.8 5.16 4.56 6.6-.2.72-.72 2.58-.84 3.02-.12.44.16.44.34.32.24-.16 2.82-1.92 3.96-2.7.66.08 1.32.16 1.98.16 5.52 0 10-3.48 10-7.8S17.52 3 12 3z"/>
+                    </svg>
+                    카카오로 로그인
+                </button>
+            </div>
+
+            <!-- 회원가입 링크 -->
+            <div class="signup-prompt">
+                아직 계정이 없으신가요? <a href="#" class="signup-link">회원가입</a>
+            </div>
+        </main>
+
+        <!-- 음식 일러스트 (SVG) -->
+        <div class="illustration-container">
+            <svg class="food-bowl-svg" viewBox="0 0 300 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <ellipse cx="150" cy="110" rx="90" ry="25" fill="#BFDBFE" />
+                <ellipse cx="150" cy="106" rx="85" ry="20" fill="#EFF6FF" />
+                <path d="M140 85 C160 70, 190 75, 200 95 C180 105, 150 100, 140 85 Z" fill="#F87171" />
+                <path d="M148 85 Q165 80 185 92" stroke="#FFFFFF" stroke-width="2" />
+                <path d="M155 88 Q170 85 192 95" stroke="#FFFFFF" stroke-width="2" />
+                <circle cx="100" cy="85" r="22" fill="#4ADE80" />
+                <circle cx="120" cy="80" r="20" fill="#22C55E" />
+                <circle cx="85" cy="92" r="15" fill="#16A34A" />
+                <circle cx="125" cy="95" r="12" fill="#FB923C" />
+                <circle cx="205" cy="98" r="10" fill="#EF4444" />
+                <ellipse cx="180" cy="90" rx="14" ry="10" transform="rotate(-15 180 90)" fill="#A3E635" />
+                <circle cx="180" cy="90" r="5" fill="#78350F" />
+            </svg>
+        </div>
+
+        <!-- 하단 기능 소개 -->
+        <footer class="features">
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <i data-lucide="heart-pulse" style="width: 18px; height: 18px;"></i>
+                </div>
+                <div class="feature-title">지병 맞춤 추천</div>
+                <div class="feature-desc">지병 간 연관성을 분석하여 맞춤 식재료를 추천해드려요.</div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <i data-lucide="book-open" style="width: 18px; height: 18px;"></i>
+                </div>
+                <div class="feature-title">질병 정보 제공</div>
+                <div class="feature-desc">질병에 대한 정확한 정보를 쉽게 확인할 수 있어요.</div>
+            </div>
+
+            <div class="feature-item">
+                <div class="feature-icon-wrapper">
+                    <i data-lucide="activity" style="width: 18px; height: 18px;"></i>
+                </div>
+                <div class="feature-title">건강 관리</div>
+                <div class="feature-desc">식단 관리와 건강 습관으로 더 건강한 삶을 만들어가요.</div>
+            </div>
+        </footer>
+
+        <!-- 저작권 -->
+        <div class="footer">
+            &copy; 2024 건강한 식탁. All rights reserved.
+        </div>
+    </div>
+
+    <!-- 외부 JS 스크립트 연결 -->
+    <script src="js/login.js"></script>
+</body>
+</html>
