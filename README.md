@@ -79,15 +79,35 @@
 |:---:|:---|:---|
 | `GET` | `/api/diseases/{category}` | 카테고리별 질병 정보 조회 |
 | `POST` | `/api/foods/recommend` | 선택한 질병에 따른 식재료 추천 |
+| `GET` | `/food` | 카테고리별 질병 정보 조회 |
+| `POST` | `/signup` | 회원가입 |
 
-### 식재료 추천 API 요청 예시
+## 🔌 API 명세
 
-**Request**
+## 🔌 API 명세
 
-```http
-POST /api/foods/recommend
-Content-Type: application/json
-```
+| Method | Endpoint | 설명 |
+|:---:|:---|:---|
+| `GET` | `/api/diseases/{category}` | 카테고리별 질병 정보 조회 |
+| `POST` | `/api/foods/recommend` | 선택한 질병에 따른 맞춤 식재료 추천 |
+| `GET` | `/food` | 식재료 추천 페이지 조회 |
+| `POST` | `/signup` | 회원가입 정보 처리 |
+
+### 1. 식재료 추천 API
+
+**`POST /api/foods/recommend`**
+
+선택한 질병 ID를 서버에 전달하여 질병별 맞춤 식재료 정보를 조회하는 API입니다.
+
+**처리 과정**
+
+1. `food.html`에서 사용자가 선택한 질병 ID 목록(`diseaseIds`)을 Fetch API를 통해 POST 방식으로 전송합니다.
+2. `FoodApiController`에서 요청 데이터를 전달받습니다.
+3. `RecommendedRepository`를 통해 데이터베이스에서 해당 질병의 추천 식재료 정보를 조회합니다.
+4. `DiseaseRecommendDto`에 정의된 응답 구조에 맞게 조회 결과를 가공합니다.
+5. 가공한 데이터를 JSON 형태로 반환하고, 프론트엔드에서 추천 식재료 목록을 화면에 표시합니다.
+
+**요청 데이터 예시**
 
 ```json
 {
@@ -95,12 +115,30 @@ Content-Type: application/json
 }
 ```
 
-**설명**
+**주요 관련 클래스**
 
-- `diseaseIds`: 추천 대상 질병의 ID 목록
-- 응답 데이터: 실제 API에서 반환하도록 구현한 식재료 정보
+- `FoodApiController`: 요청 처리 및 응답 데이터 구성
+- `DiseaseRecommendDto`: 요청 데이터와 응답 데이터 구조 정의
+- `RecommendedRepository`: 추천 식재료 데이터 조회
+- `FoodRepository`: 식재료 관련 데이터 조회
 
-※ 요청 형식과 응답 구조는 실제 컨트롤러 및 DTO 구현에 맞게 수정합니다.
+### 2. 질병 정보 조회 API
+
+**`GET /api/diseases/{category}`**
+
+요청 URL에 전달된 카테고리를 기준으로 질병 정보를 조회하고, 조회 결과를 프론트엔드에 반환합니다.
+
+### 3. 식재료 추천 페이지
+
+**`GET /food`**
+
+MainController에서 질병을 조회해서 식재료 추천 화면인 `food.html`에 반영해서 화면을 반환합니다. 사용자는 해당 화면에서 질병을 선택하고, 식재료 추천 API를 통해 추천 결과를 조회할 수 있습니다.
+
+### 4. 회원가입
+
+**`POST /signup`**
+
+회원가입 폼에서 전송한 정보를 `SignupRequest` 객체로 전달받아 `MemberService`에서 회원가입을 처리합니다. 처리 결과에 따라 로그인 화면으로 이동하거나, 입력값과 오류 메시지를 유지한 채 회원가입 화면을 다시 표시합니다.
 
 ## 🗄️ 데이터베이스
 <img width="883" height="667" alt="DB" src="https://github.com/user-attachments/assets/5b96e19a-d943-48b9-afe6-42c07eaced50" />
