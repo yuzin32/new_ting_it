@@ -1,0 +1,478 @@
+
+/* ==========================================================================
+   4. 메인 콘텐츠 2열 그리드 (Content Grid)
+   ========================================================================== */
+.body-interactive-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.body-buttons-col {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.organ-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  background-color: #ffffff;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.organ-btn:hover,
+.organ-btn.active {
+  border-color: var(--blue);
+  background-color: #edf4ff;
+  color: var(--blue);
+}
+
+.body-graphic img {
+  max-width: 140px;
+  height: auto;
+}
+
+.body-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   4-2. [Right Card] 부위 미선택 안내 뷰 & 질병 상세 영역
+   -------------------------------------------------------------------------- */
+/* 초기 안내 플레이스홀더 */
+.initial-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--text-mid);
+}
+
+.initial-placeholder .placeholder-icon {
+  font-size: 48px;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  animation: bounce 2s infinite;
+}
+
+.initial-placeholder h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 8px;
+}
+
+.initial-placeholder p {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.6;
+  margin: 0;
+}
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+  40% { transform: translateY(-8px); }
+  60% { transform: translateY(-4px); }
+}
+
+/* 선택된 부위 배너 */
+.organ-banner {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background-color: var(--bg);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.organ-badge-icon {
+  font-size: 24px;
+  color: var(--blue);
+  background: #ffffff;
+  padding: 12px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+}
+
+.organ-badge-text {
+  font-size: 11px;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.organ-name {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 2px 0 4px 0;
+}
+
+.organ-desc {
+  font-size: 13px;
+  color: var(--text-mid);
+  margin: 0;
+}
+
+.section-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.sub-title {
+  font-size: 15px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.total-count {
+  font-size: 12px;
+  color: var(--blue);
+  font-weight: 600;
+}
+
+.disease-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  background-color: #ffffff;
+  font-size: 13px;
+  color: var(--text-mid);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.pill-btn:hover {
+  background-color: var(--bg);
+  border-color: var(--blue);
+}
+
+.pill-btn.active {
+  background-color: var(--blue);
+  color: #ffffff;
+  border-color: var(--blue);
+}
+
+.disease-box-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.disease-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.disease-short {
+  font-size: 14px;
+  color: var(--text-mid);
+  line-height: 1.5;
+}
+
+.info-block {
+  margin-bottom: 20px;
+}
+
+.info-block h5 {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 10px;
+}
+
+.inline-bullet-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  list-style: none;
+  padding-left: 0;
+}
+
+.inline-bullet-list li {
+  font-size: 13px;
+  color: var(--text-mid);
+  position: relative;
+  padding-left: 12px;
+}
+
+.inline-bullet-list li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--blue);
+  font-weight: bold;
+}
+
+/* 추천 카드 (호버 효과 없음) */
+.habit-cards,
+.care-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.habit-card,
+.care-card {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--bg);
+  border: 1px solid var(--border);
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-main);
+}
+
+.habit-card i {
+  color: var(--green);
+
+  font-size: 14px;
+}
+
+.care-card i {
+  color: var(--blue);
+  font-size: 14px;
+}
+
+/* 선택된 지병 전체 컨테이너 배경색 추가 */
+.selected-diseases-container {
+  margin-top: 20px;
+  padding: 16px;
+  background-color: #f1f5f9; /* 배경색 지정 */
+  border: 1px dashed #cbd5e1;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* 확대된 지병 추가 버튼 (왼쪽 배치) */
+#add-disease-btn,
+.btn-primary-lg {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: var(--blue);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgba(47, 111, 235, 0.25);
+  transition: all 0.2s ease;
+}
+
+#add-disease-btn:hover,
+.btn-primary-lg:hover {
+  background-color: #1d52d8;
+  transform: translateY(-1px);
+}
+
+.selected-chips-area {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+
+.selected-count-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+#selected-count {
+  color: var(--blue);
+}
+
+#selected-chips-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  min-height: 32px;
+}
+
+#selected-chips-wrapper .empty-msg {
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.disease-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px 6px 12px;
+  background-color: #2563eb;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+}
+
+.disease-chip .chip-remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border: none;
+  background-color: rgba(255, 255, 255, 0.25);
+  color: #ffffff;
+  border-radius: 50%;
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0;
+}
+
+.disease-chip .chip-remove-btn:hover {
+  background-color: #ef4444;
+}
+/* ==========================================================================
+   5. 하단 부위별 질병 요약 슬라이더 & 하단 배너
+   ========================================================================== */
+.overview-card {
+  margin-bottom: 24px;
+}
+
+.slider-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+}
+
+.summary-slider-wrapper {
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  width: 100%;
+  padding: 10px 4px;
+  scrollbar-width: none;
+}
+
+.summary-slider-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.organ-summary-track {
+  display: flex;
+  gap: 16px;
+}
+
+.summary-item {
+  flex: 0 0 calc(100% / 5 - 13px);
+  min-width: 170px;
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 12px;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.summary-item.active {
+  border: 2px solid var(--blue);
+  background-color: #fafcff;
+}
+
+.summary-head {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+.summary-head h4 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.summary-item ul {
+  list-style: none;
+  padding-left: 8px;
+  margin: 0;
+}
+
+.summary-item li {
+  font-size: 12px;
+  color: var(--text-mid);
+  margin-bottom: 4px;
+}
+
+.summary-item li::before {
+  content: "• ";
+  color: var(--text-muted);
+}
+
+.slider-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid var(--border);
+  background: #ffffff;
+  cursor: pointer;
+  z-index: 10;
+}
+
+.prev-btn { left: -14px; }
+.next-btn { right: -14px; }
+
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .content-grid { grid-template-columns: 1fr; }
+  .summary-item { flex: 0 0 calc(100% / 3 - 11px); }
+  .banner-features { flex-direction: column; }
+}
+
+@media (max-width: 600px) {
+  .selected-diseases-container { flex-direction: column; align-items: stretch; }
+  #add-disease-btn { width: 100%; }
+}

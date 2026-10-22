@@ -1,0 +1,344 @@
+body.login-page {
+    background-color: var(--blue-light);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;   /* center면 내용이 길 때 위가 잘림 */
+    padding: 40px 20px;
+    color: var(--text-main);
+    flex-wrap: wrap;
+}
+
+.login-container {
+    width: 100%;
+    max-width: 480px;
+    margin: auto 0;            /* 세로 가운데 정렬은 여기서 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login-header {
+    position: static;          /* 공통 CSS의 fixed 방지 */
+    width: auto;
+    height: auto;
+    background: none;
+    box-shadow: none;
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+
+.container {
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 헤더 */
+.header {
+    text-align: center;
+    margin-bottom: 24px;
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.brand-logo .heart-icon {
+    color: #2563eb;
+    fill: #3b82f6;
+}
+
+.brand-title {
+    font-size: 28px;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: -0.5px;
+}
+
+.brand-subtitle {
+    font-size: 14px;
+    color: var(--text-mid);
+    font-weight: 500;
+}
+
+/* 로그인 카드 */
+.card {
+    background: var(--white);
+    width: 100%;
+    border-radius: 20px;
+    padding: 36px 32px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.01);
+    margin-bottom: 32px;
+}
+
+.card-title {
+    font-size: 22px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 6px;
+    color: #0f172a;
+}
+
+.card-welcome {
+    font-size: 13px;
+    color: var(--text-mid);
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+/* 폼 요소 */
+.form-group {
+    margin-bottom: 16px;
+    position: relative;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper .input-icon {
+    position: absolute;
+    left: 14px;
+    color: #94a3b8;
+    width: 18px;
+    height: 18px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 12px 14px 12px 42px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    transition: all 0.2s ease;
+    background-color: var(--white);
+}
+
+.input-field:focus {
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.toggle-password {
+    position: absolute;
+    right: 14px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+/* 옵션 행 (상태 유지 / 비밀번호 찾기) */
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 13px;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    color: var(--text-mid);
+    user-select: none;
+}
+
+.checkbox-container input {
+    cursor: pointer;
+    accent-color: var(--blue);
+    width: 15px;
+    height: 15px;
+}
+
+.forgot-password {
+    color: var(--text-mid);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* 버튼 */
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--blue);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.btn-primary:hover {
+    background-color: var(--blue-hover);
+}
+
+/* 구분선 */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 24px 0;
+    color: #94a3b8;
+    font-size: 12px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid var(--border);
+}
+
+.divider span {
+    padding: 0 12px;
+}
+
+/* 소셜 로그인 */
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 24px;
+}
+
+.btn-social {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-social:hover {
+    background-color: #f8fafc;
+}
+
+.social-icon-svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* 회원가입 안내 */
+.signup-prompt {
+    text-align: center;
+    font-size: 13px;
+    color: var(--text-mid);
+}
+
+.signup-link {
+    color: var(--blue);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 4px;
+}
+
+.signup-link:hover {
+    text-decoration: underline;
+}
+
+/* 일러스트레이션 영역 */
+.food-img {
+    margin: 10px 0 0px;
+    justify-content: center;
+    width: auto;
+    height: 150px;
+}
+/*************************************************************/
+/* 라벨 */
+.field-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+.field-label span {
+    color: var(--text-muted);
+    font-weight: 400;
+}
+
+/* 에러 메시지 */
+.field-error {
+    display: none;
+    margin-top: 6px;
+    padding-left: 4px;
+    font-size: 12px;
+    color: var(--red);
+}
+.field-error.show { display: block; }
+.input-field.invalid { border-color: var(--red); }
+
+/* 질환 선택 칩 */
+.chip-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.chip input { display: none; }
+.chip span {
+    display: inline-block;
+    padding: 7px 14px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--text-mid);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+.chip input:checked + span {
+    background: var(--blue-light);
+    border-color: var(--blue);
+    color: var(--blue);
+    font-weight: 600;
+}
+
+/* 약관 */
+.agree-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    background: var(--bg);
+    border-radius: 10px;
+    font-size: 13px;
+}
+.agree-list .checkbox-container:first-child {
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+#agreeError { margin-bottom: 12px; }
+#agreeError.show + .btn-primary,
+#agreeError + .btn-primary { margin-top: 12px; }

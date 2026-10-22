@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:replace="~{fragments/head :: headContent}"></th:block>
+    <link rel="stylesheet" href="/css/login.css">
+</head>
+<body class="login-page">
+<div class="login-container">
+    <header class="login-header">
+        <div class="brand-logo">
+            <i data-lucide="heart" class="heart-icon"></i>
+            <h1 class="brand-title">건강한 식탁</h1>
+        </div>
+        <p class="brand-subtitle">지병에 맞는 식재료로 건강한 삶을</p>
+    </header>
+
+    <main class="card">
+        <h2 class="card-title">회원가입</h2>
+        <p class="card-welcome">건강한 식탁과 함께 시작해 보세요!</p>
+        <!-- 회원가입 실패 메시지 -->
+        <p class="field-error" th:if="${errorMessage}" th:text="${errorMessage}" th:classappend="${errorMessage != null} ? ' show' : ''"></p>
+        <form id="signupForm" th:action="@{/signup}" method="post" novalidate>
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i data-lucide="user" class="input-icon"></i>
+                    <input type="text" name="id" id="idInput" class="input-field" th:value="${signupRequest?.id}"
+                           placeholder="아이디를 입력해주세요" required>
+                </div>
+                <p class="field-error" data-for="IdInput"
+                   th:if="${idError}" th:text="${idError}" th:classappend="${idError != null} ? ' show' : ''">></p>
+            </div>
+            <!-- 이름 -->
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i data-lucide="user" class="input-icon"></i>
+                    <input type="text" name="name" id="nameInput" class="input-field" th:value="${signupRequest?.name}"
+                           placeholder="이름을 입력해주세요" required>
+                </div>
+                <p class="field-error" data-for="nameInput"
+                   th:if="${nameError}" th:text="${nameError}" th:classappend="${nameError != null} ? ' show' : ''"></p>
+            </div>
+
+            <!-- 이메일 -->
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i data-lucide="mail" class="input-icon"></i>
+                    <input type="email" name="email" id="emailInput" class="input-field" th:value="${signupRequest?.email}"
+                           placeholder="이메일을 입력해주세요" required>
+                </div>
+                <p class="field-error" data-for="emailInput"
+                   th:if="${emailError}" th:text="${emailError}" th:classappend="${emailError != null} ? ' show' : ''"></p>
+            </div>
+
+            <!-- 비밀번호 -->
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i data-lucide="lock" class="input-icon"></i>
+                    <input type="password" name="password" id="passwordInput" class="input-field"
+                           placeholder="비밀번호 (8자 이상)" required>
+                    <button type="button" class="toggle-password" data-target="passwordInput">
+                        <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+                    </button>
+                </div>
+                <p class="field-error" data-for="passwordInput"
+                   th:if="${passwordError}" th:text="${passwordError}" th:classappend="${passwordError != null} ? ' show' : ''"></p>
+            </div>
+
+            <!-- 비밀번호 확인 -->
+            <div class="form-group">
+                <div class="input-wrapper">
+                    <i data-lucide="lock-keyhole" class="input-icon"></i>
+                    <input type="password" name="passwordConfirm" id="passwordConfirm" class="input-field"
+                           placeholder="비밀번호를 다시 입력해주세요" required>
+                    <button type="button" class="toggle-password" data-target="passwordConfirm">
+                        <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
+                    </button>
+                </div>
+                <p class="field-error" data-for="passwordConfirm"
+                   th:if="${passwordConfirmError}" th:text="${passwordConfirmError}" th:classappend="${passwordConfirmError != null} ? ' show' : ''"></p>
+            </div>
+            <!-- 성별 -->
+            <div class="form-group">
+                <p class="field-label">성별</p>
+                <div class="chip-group">
+                    <label class="chip"><input type="radio" name="gender" value="MALE" th:checked="${signupRequest?.gender=='MALE'}"><span>남성</span></label>
+                    <label class="chip"><input type="radio" name="gender" value="FEMALE" th:checked="${signupRequest?.gender=='FEMALE'}"><span>여성</span></label>
+                </div>
+                <p class="field-error" id="genderError"
+                   th:if="${genderError}" th:text="${genderError}" th:classappend="${genderError != null} ? ' show' : ''"></p>
+            </div>
+
+            <!-- 약관 동의 -->
+            <div class="agree-list">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="agreeAll">
+                    <span class="bold">전체 동의</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" class="agree-item" required>
+                    <span>[필수] 이용약관 동의</span>
+                </label>
+                <label class="checkbox-container">
+                    <input type="checkbox" class="agree-item" required>
+                    <span>[필수] 개인정보 수집·이용 동의</span>
+                </label>
+            </div>
+            <p class="field-error" id="agreeError"></p>
+
+            <button type="submit" class="btn-primary">회원가입</button>
+        </form>
+
+        <div class="divider"><span>또는</span></div>
+
+        <div class="signup-prompt">
+            이미 계정이 있으신가요? <a th:href="@{/login}" class="signup-link">로그인</a>
+        </div>
+    </main>
+</div>
+
+<footer th:replace="~{fragments/footer :: footer}"></footer>
+<script src="/js/login.js"></script>
+</body>
+</html>
