@@ -43,7 +43,7 @@
 | 구분 | 기술 |
 |:---|:---|
 | **Backend** | Java, Spring Boot |
-| **Database** | MySQL |
+| **Database** |  MariaDB |
 | **SQL 처리** | JdbcTemplate |
 | **Frontend** | HTML, CSS, JavaScript |
 | **비동기 통신** | Fetch API |
@@ -66,7 +66,7 @@
 - 데이터베이스에서 관련 식재료 조회
 - 조회 결과를 화면에 표시
 
-### 3. 복수 질병 식재료 비교
+ㄴ복수 질병 식재료 비교
 
 - 여러 질병을 동시에 선택
 - 질병별 추천 식재료 비교
@@ -103,15 +103,8 @@ Content-Type: application/json
 ※ 요청 형식과 응답 구조는 실제 컨트롤러 및 DTO 구현에 맞게 수정합니다.
 
 ## 🗄️ 데이터베이스
+<img width="883" height="667" alt="DB" src="https://github.com/user-attachments/assets/5b96e19a-d943-48b9-afe6-42c07eaced50" />
 
-주요 테이블
-
-| 테이블명 | 설명 |
-|:---|:---|
-| `th_disease` | 질병 정보 관리 |
-| `th_food` | 식재료 정보 관리 |
-
-※ 실제 데이터베이스 스키마 및 테이블 관계에 따라 내용을 추가합니다.
 
 ## 📚 프로젝트를 통해 배운 점
 
@@ -121,38 +114,6 @@ Content-Type: application/json
 - 복수 질병에 해당하는 식재료의 중복 데이터 처리
 - 개발 과정에서 발생한 오류를 분석하고 원인을 찾아 해결하는 경험
 
-## 🚀 실행 방법
-
-### 1. 프로젝트 클론
-
-```bash
-git clone <YOUR_REPOSITORY_URL>
-cd <YOUR_PROJECT_DIRECTORY>
-```
-
-### 2. 개발 환경 준비
-
-- Java 17
-- Gradle
-- MySQL
-
-### 3. 데이터베이스 설정
-
-MySQL 데이터베이스를 준비하고 프로젝트의 데이터베이스 연결 설정을 구성합니다.
-
-데이터베이스 접속 정보는 환경 변수 또는 별도의 로컬 설정 파일로 관리합니다.
-
-### 4. 애플리케이션 실행
-
-Windows 환경에서는 다음 명령어로 실행할 수 있습니다.
-
-```bash
-gradlew.bat bootRun
-```
-
-또는 IntelliJ IDEA에서 Spring Boot 메인 클래스를 실행합니다.
-
-※ 데이터베이스 테이블과 초기 데이터가 준비되어 있어야 정상적으로 실행됩니다.
 
 ## 🔧 향후 개선 사항
 
@@ -161,6 +122,11 @@ gradlew.bat bootRun
 - 추천 결과 표시와 사용자 경험 개선
 - 테스트 코드 작성 및 API 테스트 자동화
 - 데이터베이스 구조와 조회 성능 개선
+
+## 🚀 추가 개발예정
+- 회원정보수정,로그인 기능
+- 회원가입시 질병조회정보 저장 (나중에 다시 볼수있게)
+- 커뮤니티(게시판) 기능
 
 ---
 
