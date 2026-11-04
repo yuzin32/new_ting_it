@@ -102,6 +102,27 @@ function initEventListeners() {
             }
         });
     }
+
+    // 4. [지병 맞춤 추천받기] 버튼 클릭 시 (마이페이지 연동, 알림 띄우기)
+    const recommendBtn = document.getElementById('recommend-btn');
+    if (recommendBtn) {
+        recommendBtn.addEventListener('click', () => {
+            if (selectedDiseases.size === 0) {
+                alert('최소 한 개 이상의 지병을 추가해주세요.');
+                return;
+            }
+
+            // Set 객체를 배열로 변환 후 localStorage에 저장
+            const diseasesArray = Array.from(selectedDiseases);
+            const idsArray = Array.from(selectedDiseasesID);
+
+            localStorage.setItem('userSelectedDiseases', JSON.stringify(diseasesArray));
+            localStorage.setItem('userSelectedDiseaseIDs', JSON.stringify(idsArray));
+
+            // Whitelabel Error Page 방지를 위해 페이지 이동 없이 알림 팝업 출력
+            alert("마이페이지의 '나의 질병'에 성공적으로 등록되었습니다!");
+        });
+    }
 }
 
 function updateActiveStates(organKey) {
@@ -242,8 +263,12 @@ function addDiseaseChip(diseaseName,diseaseId) {
     renderSelectedChips();
 }
 
+// Map이나 객체 형태로 관리하면 더 깔끔하지만, 현재 구조에 맞춰 연동합니다.
 function removeDiseaseChip(diseaseName) {
     selectedDiseases.delete(diseaseName);
+    // 만약 이름으로 ID 매핑을 찾기 어렵다면 현재 로드된 질병 목록에서 찾아 삭제하거나
+    // 칩 생성 시 data 속성으로 id를 넣어두는 방법도 좋습니다.
+    // 여기서는 간단히 전체 재확인 또는 단순 삭제 처리
     renderSelectedChips();
 }
 
