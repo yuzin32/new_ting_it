@@ -22,7 +22,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// Spring MVC
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-
+	//검즘 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	// Thymeleaf
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 

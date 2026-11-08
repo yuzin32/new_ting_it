@@ -10,8 +10,8 @@ public class Member {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idx; // 기본키(PK)
 
-    @Column(name = "id")
-    private String id;
+    @Column(name = "userid")
+    private String userid;
 
     @Column(nullable = false, length = 30)
     private String name;
@@ -25,41 +25,52 @@ public class Member {
     @Column(nullable = false, length = 10)
     private String gender;
 
+    @Column(nullable = false, length = 1)
+    private String terms_agree;
+    @Column(nullable = false, length = 1)
+    private String privacy_agree;
+
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
+
+    @Column(nullable = false, length = 20)
+    private String role;
 
     protected Member() {
     }
 
-    public Member(String id,String name, String email,
-                  String password, String gender) {
-        this.id = id;
+    public Member(String userid,String name, String email,
+                  String password, String gender,String terms_agree,String privacy_agree,String role) {
+        this.userid = userid;
         this.name = name;
         this.email = email;
         this.password = password;
         this.gender = gender;
         this.createdAt = LocalDateTime.now();
+        this.terms_agree = terms_agree;
+        this.privacy_agree = privacy_agree;
+        this.role = role;
     }
 
-    public String getId() { return id; }
-
+    public String getUserid() { return userid; }
     public String getName() {
         return name;
     }
-
     public String getEmail() {
         return email;
     }
-
     public String getPassword() {
         return password;
     }
-
     public String getGender() {
         return gender;
     }
-
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
+    public String getTerms_agree() {
+        return terms_agree;
+    }
+    public String getPrivacy_agree() { return privacy_agree; }
+    public String getRole() { return role; }
 }

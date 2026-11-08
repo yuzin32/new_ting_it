@@ -3,66 +3,66 @@
 <head>
     <th:block th:replace="~{fragments/head :: headContent}"></th:block>
     <link rel="stylesheet" href="/css/login.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body class="login-page">
 <div class="login-container">
-    <header class="login-header">
-        <div class="brand-logo">
-            <i data-lucide="heart" class="heart-icon"></i>
-            <h1 class="brand-title">건강한 식탁</h1>
-        </div>
-        <p class="brand-subtitle">지병에 맞는 식재료로 건강한 삶을</p>
-    </header>
-
+    <header th:replace="~{fragments/header2 :: header}"></header>
     <main class="card">
         <h2 class="card-title">회원가입</h2>
         <p class="card-welcome">건강한 식탁과 함께 시작해 보세요!</p>
         <!-- 회원가입 실패 메시지 -->
-        <p class="field-error" th:if="${errorMessage}" th:text="${errorMessage}" th:classappend="${errorMessage != null} ? ' show' : ''"></p>
+        <p class="field-error"  th:text="${errorMessage}" th:classappend="${errorMessage != null} ? ' show' : ''"></p>
         <form id="signupForm" th:action="@{/signup}" method="post" novalidate>
             <div class="form-group">
                 <div class="input-wrapper">
                     <i data-lucide="user" class="input-icon"></i>
-                    <input type="text" name="id" id="idInput" class="input-field" th:value="${signupRequest?.id}"
+                    <input type="text" name="userid" id="userid" class="input-field" th:value="${signupRequest?.userid}"
                            placeholder="아이디를 입력해주세요" required>
                 </div>
-                <p class="field-error" data-for="IdInput"
-                   th:if="${idError}" th:text="${idError}" th:classappend="${idError != null} ? ' show' : ''">></p>
+                <p class="field-error" id="useridError"
+                    th:text="${useridError}" th:classappend="${idError != null} ? ' show' : ''">></p>
             </div>
             <!-- 이름 -->
             <div class="form-group">
                 <div class="input-wrapper">
                     <i data-lucide="user" class="input-icon"></i>
-                    <input type="text" name="name" id="nameInput" class="input-field" th:value="${signupRequest?.name}"
+                    <input type="text" name="name" id="name" class="input-field" th:value="${signupRequest?.name}"
                            placeholder="이름을 입력해주세요" required>
                 </div>
-                <p class="field-error" data-for="nameInput"
-                   th:if="${nameError}" th:text="${nameError}" th:classappend="${nameError != null} ? ' show' : ''"></p>
+                <p class="field-error" id="nameError"
+                   th:text="${nameError}" th:classappend="${nameError != null} ? ' show' : ''"></p>
             </div>
 
             <!-- 이메일 -->
             <div class="form-group">
                 <div class="input-wrapper">
                     <i data-lucide="mail" class="input-icon"></i>
-                    <input type="email" name="email" id="emailInput" class="input-field" th:value="${signupRequest?.email}"
+                    <input type="email" name="email" id="email" class="input-field" th:value="${signupRequest?.email}"
                            placeholder="이메일을 입력해주세요" required>
                 </div>
-                <p class="field-error" data-for="emailInput"
-                   th:if="${emailError}" th:text="${emailError}" th:classappend="${emailError != null} ? ' show' : ''"></p>
+                <p class="field-error" id="emailError"
+                    th:text="${emailError}" th:classappend="${emailError != null} ? ' show' : ''"></p>
             </div>
 
             <!-- 비밀번호 -->
             <div class="form-group">
                 <div class="input-wrapper">
                     <i data-lucide="lock" class="input-icon"></i>
-                    <input type="password" name="password" id="passwordInput" class="input-field"
+                    <input type="password" name="password" id="password" class="input-field"
                            placeholder="비밀번호 (8자 이상)" required>
                     <button type="button" class="toggle-password" data-target="passwordInput">
                         <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
                     </button>
                 </div>
-                <p class="field-error" data-for="passwordInput"
-                   th:if="${passwordError}" th:text="${passwordError}" th:classappend="${passwordError != null} ? ' show' : ''"></p>
+                <ul class="pw-rules" id="pwRules">
+                    <li data-rule="length"><i data-lucide="circle"></i><span>8자 이상</span></li>
+                    <li data-rule="letter"><i data-lucide="circle"></i><span>영문 포함</span></li>
+                    <li data-rule="number"><i data-lucide="circle"></i><span>숫자 포함</span></li>
+                    <li data-rule="special"><i data-lucide="circle"></i><span>특수문자 포함</span></li>
+                </ul>
+                <p class="field-error" id="passwordError"
+                    th:text="${passwordError}" th:classappend="${passwordError != null} ? ' show' : ''"></p>
             </div>
 
             <!-- 비밀번호 확인 -->
@@ -75,8 +75,8 @@
                         <i data-lucide="eye" style="width: 18px; height: 18px;"></i>
                     </button>
                 </div>
-                <p class="field-error" data-for="passwordConfirm"
-                   th:if="${passwordConfirmError}" th:text="${passwordConfirmError}" th:classappend="${passwordConfirmError != null} ? ' show' : ''"></p>
+                <p class="field-error" id="passwordConfirmError"
+                  th:text="${passwordConfirmError}" th:classappend="${passwordConfirmError != null} ? ' show' : ''"></p>
             </div>
             <!-- 성별 -->
             <div class="form-group">
@@ -86,7 +86,7 @@
                     <label class="chip"><input type="radio" name="gender" value="FEMALE" th:checked="${signupRequest?.gender=='FEMALE'}"><span>여성</span></label>
                 </div>
                 <p class="field-error" id="genderError"
-                   th:if="${genderError}" th:text="${genderError}" th:classappend="${genderError != null} ? ' show' : ''"></p>
+                    th:text="${genderError}" th:classappend="${genderError != null} ? ' show' : ''"></p>
             </div>
 
             <!-- 약관 동의 -->
@@ -96,15 +96,16 @@
                     <span class="bold">전체 동의</span>
                 </label>
                 <label class="checkbox-container">
-                    <input type="checkbox" class="agree-item" required>
+                    <input type="checkbox" class="agree-item" name="terms_agree" id="terms_agree" value="Y" required>
                     <span>[필수] 이용약관 동의</span>
                 </label>
                 <label class="checkbox-container">
-                    <input type="checkbox" class="agree-item" required>
+                    <input type="checkbox" class="agree-item" name="privacy_agree" id="privacy_agree" value="Y" required>
                     <span>[필수] 개인정보 수집·이용 동의</span>
                 </label>
             </div>
-            <p class="field-error" id="agreeError"></p>
+            <p class="field-error" id="agreeError"
+                th:text="${agreeError}" th:classappend="${agreeError != null} ? ' show' : ''"></p>
 
             <button type="submit" class="btn-primary">회원가입</button>
         </form>

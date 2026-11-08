@@ -4,25 +4,20 @@
 </head>
 <body class="login-page">
 <div class="login-container">
-    <header class="login-header">
-        <div class="brand-logo">
-            <i data-lucide="heart" class="heart-icon"></i>
-            <h1 class="brand-title">건강한 식탁</h1>
-        </div>
-        <p class="brand-subtitle">지병에 맞는 식재료로 건강한 삶을</p>
-    </header>
-
+    <header th:replace="~{fragments/header2 :: header}"></header>
         <!-- 로그인 폼 카드 -->
         <main class="card">
             <h2 class="card-title">로그인</h2>
             <p class="card-welcome">건강한 식탁에 오신 것을 환영합니다!</p>
 
-            <form id="loginForm">
-                <!-- 이메일 입력 -->
+            <form th:action="@{/login}" method="post">
+                <p th:if="${param.error}" style="color:red;">
+                <div class="info-box"><p th:if="${param.logout}">로그아웃 되었습니다.</p> </div>
+                <!-- id 입력 -->
                 <div class="form-group">
                     <div class="input-wrapper">
-                        <i data-lucide="mail" class="input-icon"></i>
-                        <input type="id" class="input-field" placeholder="아이디를 입력해주세요" required>
+                        <i data-lucide="id" class="input-icon"></i>
+                        <input type="text" name="userid" class="input-field" placeholder="아이디를 입력해주세요" required>
                     </div>
                 </div>
 
@@ -30,7 +25,7 @@
                 <div class="form-group">
                     <div class="input-wrapper">
                         <i data-lucide="lock" class="input-icon"></i>
-                        <input type="password" id="passwordInput" class="input-field" placeholder="비밀번호를 입력해주세요" required>
+                        <input type="password" name="password"  id="passwordInput" class="input-field" placeholder="비밀번호를 입력해주세요" required>
                         <button type="button" class="toggle-password" id="togglePassword">
                             <i data-lucide="eye" id="eyeIcon" style="width: 18px; height: 18px;"></i>
                         </button>
@@ -38,13 +33,9 @@
                 </div>
 
                 <!-- 로그인 옵션 -->
-                <div class="form-options">
-                    <label class="checkbox-container">
-                        <input type="checkbox">
-                        <span>로그인 상태 유지</span>
-                    </label>
-                    <a href="#" class="forgot-password">비밀번호 찾기</a>
-                </div>
+<!--                <div class="form-options">-->
+<!--                    <a href="#" class="forgot-password">비밀번호 찾기</a>-->
+<!--                </div>-->
 
                 <!-- 로그인 버튼 -->
                 <button type="submit" class="btn-primary">로그인</button>

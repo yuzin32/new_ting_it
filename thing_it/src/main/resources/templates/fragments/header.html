@@ -1,6 +1,4 @@
-
-
-<header>
+<header xmlns:sec="http://www.w3.org/1999/xhtml">
     <div class="header-inner">
         <div class="logo">
             <span class="heart">♥</span>건강한 식탁
@@ -14,8 +12,17 @@
         <div class="header-right">
             <div class="search-box">🔍 질병, 부위 검색</div>
             <div class="icon-btn">🔔</div>
-             <a href="/login">로그인</a>
-<!--            <div class="icon-btn user">👤</div>-->
+<!--             <a href="/login">로그인</a>-->
+<!--            isAuthenticated로그인 한 사람에게만 보이는 파라미터-->
+            <div th:if="${loggedIn}">
+                <span th:text="${loginName}"></span> 님 환영합니다.
+                <form th:action="@{/logout}" method="post">
+                    <button class="btn" type="submit">로그아웃</button>
+                </form>
+            </div>
+            <div th:unless="${loggedIn}">
+                <a th:href="@{/login}">로그인</a>
+            </div>
         </div>
     </div>
 </header>

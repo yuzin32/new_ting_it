@@ -342,3 +342,31 @@ body.login-page {
 #agreeError { margin-bottom: 12px; }
 #agreeError.show + .btn-primary,
 #agreeError + .btn-primary { margin-top: 12px; }
+
+.pw-rules {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+}
+
+.pw-rules li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #9ca3af;
+    transition: color 0.2s;
+}
+
+.pw-rules li i,
+.pw-rules li svg {
+    width: 14px;
+    height: 14px;
+}
+
+.pw-rules li.valid {
+    color: #16a34a;
+}
