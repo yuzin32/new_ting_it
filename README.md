@@ -140,7 +140,7 @@ MainController에서 질병을 조회해서 식재료 추천 화면인 `food.htm
 
 ## 🗄️ 데이터베이스
 <img width="883" height="667" alt="DB" src="https://github.com/user-attachments/assets/5b96e19a-d943-48b9-afe6-42c07eaced50" />
-
+개발중이므로 더 추가될 가능성이 있습니다. 
 
 ## 📚 프로젝트를 통해 배운 점
 
