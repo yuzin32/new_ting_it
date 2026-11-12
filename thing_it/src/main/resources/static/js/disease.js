@@ -1,11 +1,11 @@
 // =============================================================
 //  전역 상태 변수 관리
 // =============================================================
-let currentOrganKey = null;            // 현재 선택된 부위
-let currentDiseaseIndex = 0;           // 선택된 질병 인덱스
+let currentOrganKey = null;            // 현재 선택된 부위 (초기값 null)
+let currentDiseaseIndex = null;        // 선택된 질병 인덱스 (초기값 null: 미선택)
 let currentLoadedDiseases = [];        // API로 로드된 질병 목록
 const selectedDiseases = new Set();    // 사용자가 추가한 지병 목록 (중복 방지)
-const selectedDiseasesID = new Set();    // 사용자가 추가한 지병 목록 (중복 방지)
+const selectedDiseasesID = new Set();  // 사용자가 추가한 지병 ID 목록
 
 // =============================================================
 //  DOM 요소 획득
@@ -17,6 +17,7 @@ const organIconEl = document.getElementById('organ-icon');
 const totalCountEl = document.getElementById('total-count');
 const diseasePillsEl = document.getElementById('disease-pills');
 const diseaseBoxEl = document.getElementById('disease-box');
+const diseasePlaceholderEl = document.getElementById('disease-placeholder'); // 질병 선택 유도 안내 문구 영역
 const summaryTrackEl = document.getElementById('summaryTrack');
 const bannerFeaturesEl = document.getElementById('banner-features');
 
@@ -44,12 +45,18 @@ const organMeta = {
     blood: { name: "피", icon: "fa-solid fa-droplet", desc: "동맥·정맥·모세혈관으로 구성되어 산소와 영양분을 전신에 공급하고 노폐물을 회수합니다.", dbCategory: "피" }
 };
 
+
 // =============================================================
 //  초기화 실행
 // =============================================================
 document.addEventListener('DOMContentLoaded', () => {
+    currentOrganKey = null;
+    currentDiseaseIndex = null;
+
     if (initialPlaceholder) initialPlaceholder.style.display = 'flex';
     if (diseaseDetailContainer) diseaseDetailContainer.style.display = 'none';
+
+    organBtns.forEach(btn => btn.classList.remove('active'));
 
     initAllSummaryCards();
     initEventListeners();
@@ -67,26 +74,26 @@ function initEventListeners() {
             const organKey = btn.getAttribute('data-organ');
             if (organKey) {
                 currentOrganKey = organKey;
-                currentDiseaseIndex = 0;
+                currentDiseaseIndex = null; // 부위 변경 시 질병 선택 초기화
                 updateActiveStates(organKey);
                 renderOrganDetail(organKey);
             }
         });
     });
 
-    // 2. [지병 추가하기] 버튼 클릭 ,질병아이디추가(유진260929)
+    // 2. [지병 추가하기] 버튼 클릭
     if (addDiseaseBtn) {
         addDiseaseBtn.addEventListener('click', () => {
-            if (currentLoadedDiseases.length > 0 && currentLoadedDiseases[currentDiseaseIndex]) {
+            if (currentDiseaseIndex !== null && currentLoadedDiseases[currentDiseaseIndex]) {
                 const diseaseObj = currentLoadedDiseases[currentDiseaseIndex];
                 const diseaseName = typeof diseaseObj === 'object' ? diseaseObj.name : diseaseObj;
-                const diseaseId = typeof diseaseObj === 'object' ?diseaseObj.id: diseaseObj;
+                const diseaseId = typeof diseaseObj === 'object' ? diseaseObj.id : diseaseObj;
 
                 if (diseaseName) {
-                    addDiseaseChip(diseaseName,diseaseId);
+                    addDiseaseChip(diseaseName, diseaseId);
                 }
             } else {
-                alert('추가할 질병 정보가 없습니다.');
+                alert('추가할 질병을 먼저 선택해주세요.');
             }
         });
     }
@@ -103,24 +110,52 @@ function initEventListeners() {
         });
     }
 
-    // 4. [지병 맞춤 추천받기] 버튼 클릭 시 (마이페이지 연동, 알림 띄우기)
+    // 4. [지병 맞춤 추천받기] 버튼 클릭 시 (DB 저장 API 호출로 변경)
     const recommendBtn = document.getElementById('recommend-btn');
     if (recommendBtn) {
-        recommendBtn.addEventListener('click', () => {
+        recommendBtn.addEventListener('click', async () => {
             if (selectedDiseases.size === 0) {
                 alert('최소 한 개 이상의 지병을 추가해주세요.');
                 return;
             }
 
-            // Set 객체를 배열로 변환 후 localStorage에 저장
-            const diseasesArray = Array.from(selectedDiseases);
+            // 선택된 질병 ID 배열 생성 (외래키 저장을 위해 ID가 핵심입니다)
             const idsArray = Array.from(selectedDiseasesID);
 
-            localStorage.setItem('userSelectedDiseases', JSON.stringify(diseasesArray));
-            localStorage.setItem('userSelectedDiseaseIDs', JSON.stringify(idsArray));
+            try {
+                // // 버튼을 누르는 순간 HTML 메타 태그에서 안전하게 CSRF 토큰을 읽어옵니다.
+                // const tokenMeta = document.querySelector("meta[name='_csrf']");
+                // const headerMeta = document.querySelector("meta[name='_csrf_header']");
+                //
+                // const headers = { 'Content-Type': 'application/json' };
+                // if (tokenMeta && headerMeta) {
+                //     headers[headerMeta.getAttribute("content")] = tokenMeta.getAttribute("content");
+                // }
 
-            // Whitelabel Error Page 방지를 위해 페이지 이동 없이 알림 팝업 출력
-            alert("마이페이지의 '나의 질병'에 성공적으로 등록되었습니다!");
+                // 서버의 /api/my-diseases 엔드포인트로 POST 요청 전송
+                const response = await fetch('/api/my-diseases', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        diseaseIds: idsArray // DiseaseSaveRequest DTO 구조에 맞춤
+                    })
+                });
+
+                if (response.ok) {
+                    alert("마이페이지의 '나의 질병'에 성공적으로 등록되었습니다!");
+
+                    // 선택적으로 저장 후 마이페이지의 나의 질병 페이지로 이동시키려면 아래 주석을 해제하세요
+                    // location.href = '/mypage/my_disease';
+                } else {
+                    const errorMsg = await response.text();
+                    alert("저장 실패: " + errorMsg);
+                }
+            } catch (error) {
+                console.error("DB 저장 에러:", error);
+                alert("서버 통신 중 오류가 발생했습니다.");
+            }
         });
     }
 }
@@ -138,6 +173,12 @@ async function renderOrganDetail(organKey) {
     if (initialPlaceholder) initialPlaceholder.style.display = 'none';
     if (diseaseDetailContainer) diseaseDetailContainer.style.display = 'block';
 
+    // 부위를 새로 선택했을 때는 아직 질병을 누르지 않았으므로 상세 박스 숨김 & 안내 문구 노출
+    currentDiseaseIndex = null;
+    if (diseaseBoxEl) diseaseBoxEl.style.display = 'none';
+    if (diseasePlaceholderEl) diseasePlaceholderEl.style.display = 'block';
+    if (bannerFeaturesEl) bannerFeaturesEl.innerHTML = '';
+
     const meta = organMeta[organKey] || { name: organKey, icon: "fa-solid fa-notes-medical", desc: "", dbCategory: organKey };
 
     if (organNameEl) organNameEl.textContent = meta.name;
@@ -153,42 +194,45 @@ async function renderOrganDetail(organKey) {
 
         if (totalCountEl) totalCountEl.textContent = `총 ${diseases.length}개`;
 
+        // 주요 질병 버튼(Pill) 생성 (이 시점에는 어떤 버튼에도 active가 붙지 않음)
         if (diseasePillsEl) {
             diseasePillsEl.innerHTML = '';
             diseases.forEach((disease, index) => {
                 const button = document.createElement('button');
-                button.className = `pill-btn ${index === currentDiseaseIndex ? 'active' : ''}`;
+                button.className = 'pill-btn'; // 초기 active 없음
                 const diseaseName = typeof disease === 'object' ? disease.name : disease;
                 button.innerHTML = `<i class="${meta.icon}"></i><span>${diseaseName}</span>`;
 
+                // 사용자가 직접 질병 버튼을 클릭했을 때만 활성화 및 상세 내용 표시
                 button.addEventListener('click', () => {
                     currentDiseaseIndex = index;
                     renderDiseasePillActive();
+
+                    if (diseasePlaceholderEl) diseasePlaceholderEl.style.display = 'none';
+                    if (diseaseBoxEl) diseaseBoxEl.style.display = 'block';
+
                     renderDiseaseDetail(disease);
                 });
 
                 diseasePillsEl.appendChild(button);
             });
         }
-
-        if (diseaseBoxEl) {
-            if (diseases.length > 0) {
-                renderDiseaseDetail(diseases[currentDiseaseIndex]);
-            } else {
-                diseaseBoxEl.innerHTML = '<p class="no-data">등록된 질병 정보가 없습니다.</p>';
-                if (bannerFeaturesEl) bannerFeaturesEl.innerHTML = '';
-            }
-        }
     } catch (error) {
         console.error('Data fetch error:', error);
-        if (diseaseBoxEl) diseaseBoxEl.innerHTML = '<p class="error-msg">데이터를 불러오는 중 오류가 발생했습니다.</p>';
+        if (diseaseBoxEl) {
+            diseaseBoxEl.style.display = 'block';
+            diseaseBoxEl.innerHTML = '<p class="error-msg">데이터를 불러오는 중 오류가 발생했습니다.</p>';
+        }
     }
 }
 
+// 클릭된 질병 버튼에만 active 클래스 부여
 function renderDiseasePillActive() {
     if (!diseasePillsEl) return;
     const pillBtns = diseasePillsEl.querySelectorAll('.pill-btn');
-    pillBtns.forEach((btn, index) => btn.classList.toggle('active', index === currentDiseaseIndex));
+    pillBtns.forEach((btn, index) => {
+        btn.classList.toggle('active', index === currentDiseaseIndex);
+    });
 }
 
 function renderDiseaseDetail(disease) {
@@ -252,7 +296,7 @@ function renderDiseaseDetail(disease) {
 // =============================================================
 //  질병 칩(Tag) 추가/삭제 및 카운트 업데이트
 // =============================================================
-function addDiseaseChip(diseaseName,diseaseId) {
+function addDiseaseChip(diseaseName, diseaseId) {
     if (selectedDiseases.has(diseaseName)) {
         alert(`'${diseaseName}'은(는) 이미 추가되어 있습니다.`);
         return;
@@ -263,17 +307,12 @@ function addDiseaseChip(diseaseName,diseaseId) {
     renderSelectedChips();
 }
 
-// Map이나 객체 형태로 관리하면 더 깔끔하지만, 현재 구조에 맞춰 연동합니다.
 function removeDiseaseChip(diseaseName) {
     selectedDiseases.delete(diseaseName);
-    // 만약 이름으로 ID 매핑을 찾기 어렵다면 현재 로드된 질병 목록에서 찾아 삭제하거나
-    // 칩 생성 시 data 속성으로 id를 넣어두는 방법도 좋습니다.
-    // 여기서는 간단히 전체 재확인 또는 단순 삭제 처리
     renderSelectedChips();
 }
 
 function renderSelectedChips() {
-    // 1. [지병 추가하기] 버튼 옆 "선택된 지병 : N개" 업데이트
     const countBadge = document.getElementById('selected-count-text');
     if (countBadge) {
         countBadge.textContent = `선택된 지병 : ${selectedDiseases.size}개`;
@@ -281,13 +320,11 @@ function renderSelectedChips() {
 
     if (!selectedChipsWrapper) return;
 
-    // 2. 추가된 지병이 없으면 기본 안내 문구 표시
     if (selectedDiseases.size === 0) {
         selectedChipsWrapper.innerHTML = '<span class="empty-msg">추가된 지병이 없습니다.</span>';
         return;
     }
 
-    // 3. 버튼 아랫줄(#selected-chips-wrapper)에 칩태그 렌더링
     selectedChipsWrapper.innerHTML = '';
     selectedDiseases.forEach(name => {
         const chip = document.createElement('div');
@@ -336,7 +373,7 @@ async function initAllSummaryCards() {
 
             summaryItem.addEventListener('click', () => {
                 currentOrganKey = organKey;
-                currentDiseaseIndex = 0;
+                currentDiseaseIndex = null;
                 updateActiveStates(organKey);
                 renderOrganDetail(organKey);
                 document.querySelector('.content-grid')?.scrollIntoView({ behavior: 'smooth' });

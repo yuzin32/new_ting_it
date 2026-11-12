@@ -1,0 +1,57 @@
+
+<th:block th:replace="~{fragments/head :: headContent}"></th:block>
+<link rel="stylesheet" href="/css/my_disease.css">
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<!-- 메인 레이아웃 -->
+<div class="container">
+    <!-- 좌측 사이드바 -->
+    <aside class="sidebar">
+        <ul class="sidebar-menu">
+            <li><a th:href="@{/mypage}"><i class="fa-regular fa-user"></i> 마이페이지</a></li>
+            <li><a th:href="@{/mypage/user_info}"><i class="fa-solid fa-id-card"></i> 내 정보</a></li>
+            <li class="active"><a th:href="@{/mypage/my_disease}"><i class="fa-regular fa-heart"></i> 나의 질병</a></li>
+            <li><a href="#"><i class="fa-regular fa-bookmark"></i> 관심 식재료</a></li>
+            <!--        <li><a href="#"><i class="fa-regular fa-calendar-check"></i> 식단 기록</a></li>-->
+            <li><a href="#"><i class="fa-solid fa-gear"></i> 설정</a></li>
+        </ul>
+        <div class="logout-btn">
+            <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃</a>
+        </div>
+    </aside>
+
+    <!-- 우측 메인 콘텐츠 -->
+    <main class="main-content">
+        <div class="page-title">
+            <h2>나의 질병 기록</h2>
+            <p>회원님이 저장한 질병 기록을 확인하세요</p>
+        </div>
+
+        <!-- my_disease.html 내 질병 섹션 -->
+        <section class="card disease-section">
+            <div class="card-header">
+                <h3>나의 질병 기록</h3>
+                <p class="sub-text">최근에 추가한 질병부터 순서대로 표시됩니다.</p>
+            </div>
+
+            <!-- 동적으로 내림차순 리스트가 출력될 영역 -->
+            <div class="disease-tags" id="my-disease-tags">
+                <!-- JS에서 동적으로 렌더링 됩니다. -->
+            </div>
+        </section>
+
+        <!-- 건강 관리 팁 -->
+        <section class="card tip-section">
+            <div class="tip-content">
+                <span class="tip-icon">🌱</span>
+                <p>꾸준한 식단 관리와 규칙적인 운동으로 건강한 습관을 만들어보세요!</p>
+            </div>
+            <a href="#" class="tip-arrow">&gt;</a>
+        </section>
+    </main>
+</div>
+
+<script src="js/my_disease.js"></script>
+</body>
+</html>
