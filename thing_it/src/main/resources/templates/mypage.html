@@ -9,9 +9,9 @@
     <!-- 좌측 사이드바 -->
     <aside class="sidebar">
       <ul class="sidebar-menu">
-        <li class="active"><a href="#"><i class="fa-regular fa-user"></i> 마이페이지</a></li>
-        <li><a href="#"><i class="fa-solid fa-id-card"></i> 내 정보</a></li>
-        <li><a href="#"><i class="fa-regular fa-heart"></i> 나의 질병</a></li>
+        <li class="active"><a th:href="@{/mypage}"><i class="fa-regular fa-user"></i> 마이페이지</a></li>
+        <li><a th:href="@{/mypage/user_info}"><i class="fa-solid fa-id-card"></i> 내 정보</a></li>
+        <li><a th:href="@{/mypage/my_disease}"><i class="fa-regular fa-heart"></i> 나의 질병</a></li>
         <li><a href="#"><i class="fa-regular fa-bookmark"></i> 관심 식재료</a></li>
 <!--        <li><a href="#"><i class="fa-regular fa-calendar-check"></i> 식단 기록</a></li>-->
         <li><a href="#"><i class="fa-solid fa-gear"></i> 설정</a></li>
@@ -69,7 +69,7 @@
       <!-- 최근 추천 식재료 -->
       <section class="card food-section">
         <div class="card-header">
-          <h3>최근 추천 식재료</h3>
+          <h3>최근 관심 식재료</h3>
           <a href="#" class="more-link">전체 보기 &gt;</a>
         </div>
         <div class="food-grid">

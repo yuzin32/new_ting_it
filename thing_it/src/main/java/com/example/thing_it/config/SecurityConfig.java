@@ -20,7 +20,8 @@ public class SecurityConfig {
                                 "/login",
                                 "/css/**",
                                 "/js/**",
-                                "/img/**"
+                                "/img/**",
+                                "/api/**"
                         ).permitAll()
                         .anyRequest().permitAll()
                 );

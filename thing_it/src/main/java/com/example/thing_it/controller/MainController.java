@@ -44,4 +44,8 @@ public class MainController {
     public String signupForm() {
         return "signup";
     }
+    @GetMapping({"/mypage/my_disease"})
+    public String myDisease() { return "my_disease"; }
+    @GetMapping({"/mypage/user_info"})
+    public String userInfo() { return "user_info"; }
 }

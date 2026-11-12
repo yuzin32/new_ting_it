@@ -1,0 +1,84 @@
+
+<th:block th:replace="~{fragments/head :: headContent}"></th:block>
+<link rel="stylesheet" href="/css/user_info.css">
+</head>
+<header th:replace="~{fragments/header :: header}"></header>
+
+<!-- 메인 레이아웃 -->
+<div class="container">
+  <!-- 좌측 사이드바 -->
+  <aside class="sidebar">
+    <ul class="sidebar-menu">
+      <li><a th:href="@{/mypage}"><i class="fa-regular fa-user"></i> 마이페이지</a></li>
+      <li class="active"><a th:href="@{/mypage/user_info}"><i class="fa-solid fa-id-card"></i> 내 정보</a></li>
+      <li><a th:href="@{/mypage/my_disease}"><i class="fa-regular fa-heart"></i> 나의 질병</a></li>
+      <li><a href="#"><i class="fa-regular fa-bookmark"></i> 관심 식재료</a></li>
+      <!--        <li><a href="#"><i class="fa-regular fa-calendar-check"></i> 식단 기록</a></li>-->
+      <li><a href="#"><i class="fa-solid fa-gear"></i> 설정</a></li>
+    </ul>
+    <div class="logout-btn">
+      <a href="#"><i class="fa-solid fa-arrow-right-from-bracket"></i> 로그아웃</a>
+    </div>
+  </aside>
+
+  <!-- 우측 메인 콘텐츠 -->
+  <main class="main-content">
+    <div class="page-title">
+      <h2>내 정보</h2>
+      <p>회원님이 저장한 정보를 확인하고 수정하세요</p>
+    </div>
+
+    <!-- 회원 기본 정보 섹션 -->
+    <section class="card user-info-section">
+      <div class="info-form-group">
+        <!-- 1. 아이디 -->
+        <div class="info-row">
+          <div class="info-label">아이디</div>
+          <div class="info-value">
+            <!-- 타임리프를 이용해 서버에서 전달받은 회원 아이디 출력 (예: th:text="${member.username}") -->
+            <span id="user-id">user1234</span>
+          </div>
+          <div class="info-action">
+            <button class="btn-edit" onclick="editId()">수정하기</button>
+          </div>
+        </div>
+
+        <!-- 2. 비밀번호 -->
+        <div class="info-row">
+          <div class="info-label">비밀번호</div>
+          <div class="info-value">
+            <span class="masked-password">********</span>
+          </div>
+          <div class="info-action">
+            <button class="btn-edit" onclick="editPassword()">수정하기</button>
+          </div>
+        </div>
+
+        <!-- 3. 이메일 -->
+        <div class="info-row">
+          <div class="info-label">이메일</div>
+          <div class="info-value">
+            <!-- 타임리프를 이용해 서버에서 전달받은 이메일 출력 (예: th:text="${member.email}") -->
+            <span id="user-email">user@example.com</span>
+          </div>
+          <div class="info-action">
+            <button class="btn-edit" onclick="editEmail()">수정하기</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 건강 관리 팁 -->
+    <section class="card tip-section">
+      <div class="tip-content">
+        <span class="tip-icon">🌱</span>
+        <p>꾸준한 식단 관리와 규칙적인 운동으로 건강한 습관을 만들어보세요!</p>
+      </div>
+      <a href="#" class="tip-arrow">&gt;</a>
+    </section>
+  </main>
+</div>
+
+<script src="#"></script>
+</body>
+</html>
